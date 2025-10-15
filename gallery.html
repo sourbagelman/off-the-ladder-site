@@ -4,254 +4,110 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Recent Work — Off The Ladder Construction</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    :root {
-      --brand: #5a3ea0;
-      --bg: #fafafa;
-      --text: #222;
-      --muted: #777;
-    }
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    /* --- Site header / nav --- */
-    .site-header {
-      background: var(--brand);
-      color: #fff;
-      padding: 0.75rem 1rem;
-    }
-    .site-header .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .brand {
-      font-weight: 700;
-      letter-spacing: .2px;
-      white-space: nowrap;
-    }
-    nav {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    nav a {
-      color: #eee;
-      text-decoration: none;
-      padding: .35rem .6rem;
-      border-radius: 6px;
-      font-weight: 600;
-      opacity: .9;
-    }
-    nav a:hover { background: rgba(255,255,255,.12); }
-    nav a.active { background: rgba(255,255,255,.18); color: #fff; }
-
-    .upload-btn {
-      margin-left: .5rem;
-      background: #fff;
-      color: var(--brand);
-      text-decoration: none;
-      font-weight: 700;
-      padding: .45rem .75rem;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      display: inline-block;
-    }
-    .upload-btn:hover { background: #efe9ff; }
-
-    /* --- Layout --- */
-    main {
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    h1 {
-      text-align: center;
-      color: var(--brand);
-      margin: 0 0 1.25rem 0;
-      letter-spacing: .2px;
-    }
-    .subhead {
-      text-align: center;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      font-size: .95rem;
-    }
-
-    /* --- Gallery grid --- */
     #gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
-      min-height: 120px;
+      min-height: 150px;
     }
-    figure {
+    #gallery figure {
       margin: 0;
-      background: #fff;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    figure a { display: block; line-height: 0; }
-    img.thumb {
+    #gallery img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform .28s ease;
       display: block;
+      transition: transform 0.25s ease;
     }
-    img.thumb:hover { transform: scale(1.03); }
-
-    .loading, .empty {
-      text-align: center;
-      color: var(--muted);
-      padding: 2rem 0;
+    #gallery img:hover {
+      transform: scale(1.03);
     }
-
-    footer {
-      text-align: center;
-      color: var(--muted);
-      padding: 2rem 1rem 3rem;
-      font-size: .9rem;
+    .upload-link {
+      display: inline-block;
+      margin: 1rem 0 2rem;
+      background: #5a2ea6;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .upload-link:hover {
+      background: #4b2391;
     }
   </style>
 </head>
 <body>
-  <!-- Site header with full nav -->
+  <!-- Sticky unified header -->
   <header class="site-header">
-    <div class="wrap">
-      <div class="brand">Off The Ladder Construction</div>
-      <nav>
-        <a href="/index.html">Story</a>
-        <a href="/gallery.html" class="active">Gallery</a>
-        <a href="/contact.html">Contact</a>
-        <a class="upload-btn" href="/upload">+ Upload New Photo</a>
+    <div class="container header-inner">
+      <a class="brand" href="/index.html">Off The Ladder Construction</a>
+      <nav class="main-nav">
+        <a href="/index.html" class="nav-link">Story</a>
+        <a href="/gallery.html" class="nav-link active">Gallery</a>
+        <a href="/contact.html" class="nav-link">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main class="container">
     <h1>Recent Work</h1>
-    <div class="subhead" id="statusLine">Loading gallery…</div>
-    <section id="gallery" aria-live="polite"></section>
+    <a class="upload-link" href="/upload">+ Upload New Photo</a>
+    <section id="gallery">Loading gallery...</section>
   </main>
 
   <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
 
   <script>
-    // Your Worker endpoint:
     const ENDPOINT = "https://otl-gallery-fetcher.lance-c84.workers.dev/";
-
-    const galleryEl = document.getElementById('gallery');
-    const statusEl  = document.getElementById('statusLine');
-
-    let lastIds = [];
-
-    async function fetchGalleryJSON() {
-      const res = await fetch(ENDPOINT, {
-        // minimize any CDN/browser caching
-        cache: 'no-store',
-        headers: { 'Accept': 'application/json' }
-      });
-      if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
-      return res.json();
-    }
-
-    function render(resources) {
-      galleryEl.innerHTML = '';
-      if (!resources || resources.length === 0) {
-        statusEl.textContent = 'No images found yet. Upload some to get started!';
-        galleryEl.className = 'empty';
-        return;
-      }
-      statusEl.textContent = '';
-      galleryEl.className = '';
-
-      resources.forEach(img => {
-        const publicId = img.public_id;
-        const format   = img.format || 'jpg';
-
-        // Cloudinary delivery (thumb + link to full)
-        const thumb = `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_700,h_500/${publicId}.${format}`;
-        const full  = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${publicId}.${format}`;
-
-        const fig = document.createElement('figure');
-        const a   = document.createElement('a');
-        const im  = document.createElement('img');
-
-        a.href = full;
-        a.target = '_blank';
-        im.src = thumb;
-        im.alt = img.display_name || 'Gallery Image';
-        im.loading = 'lazy';
-        im.className = 'thumb';
-
-        a.appendChild(im);
-        fig.appendChild(a);
-        galleryEl.appendChild(fig);
-      });
-    }
-
-    function idsFrom(resources) {
-      return (resources || []).map(r => r.public_id);
-    }
 
     async function loadGallery() {
       try {
-        const data = await fetchGalleryJSON();
-        const resources = data.resources || [];
-        render(resources);
-        lastIds = idsFrom(resources);
-      } catch (e) {
-        console.error(e);
-        statusEl.textContent = 'Unable to load gallery. Please try again shortly.';
-      }
-    }
+        const res = await fetch(ENDPOINT, { cache: 'no-store' });
+        const data = await res.json();
+        const container = document.getElementById("gallery");
+        container.innerHTML = "";
 
-    async function checkForUpdates() {
-      try {
-        const data = await fetchGalleryJSON();
-        const ids = idsFrom(data.resources || []);
-        if (ids.length !== lastIds.length || ids.some((id, i) => id !== lastIds[i])) {
-          // Something changed — re-render
-          render(data.resources || []);
-          lastIds = ids;
+        if (!data.resources || data.resources.length === 0) {
+          container.innerHTML = "<p>No images found yet. Upload some to get started!</p>";
+          return;
         }
-      } catch (e) {
-        // Don’t spam errors; a temporary network hiccup is fine.
-        console.debug('poll error', e.message);
+
+        data.resources.forEach((img) => {
+          const thumb = `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_600,h_400/${img.public_id}.${img.format}`;
+          const full = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${img.public_id}.${img.format}`;
+
+          const fig = document.createElement("figure");
+          const a = document.createElement("a");
+          const image = document.createElement("img");
+
+          a.href = full;
+          a.target = "_blank";
+          image.src = thumb;
+          image.alt = img.display_name || "Gallery Image";
+          a.appendChild(image);
+          fig.appendChild(a);
+          container.appendChild(fig);
+        });
+      } catch (err) {
+        document.getElementById("gallery").innerHTML =
+          "<p>Unable to load gallery right now. Please try again later.</p>";
       }
     }
 
-    // Initial load
     loadGallery();
-
-    // Poll every 15s for new images
-    const POLL_MS = 15000;
-    setInterval(checkForUpdates, POLL_MS);
-
-    // If we just came back from /upload, do a couple of quick refreshes
-    if (document.referrer && document.referrer.includes('/upload')) {
-      setTimeout(checkForUpdates, 2000);
-      setTimeout(checkForUpdates, 5000);
-    }
-
-    // Also refresh when the tab becomes visible again
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) checkForUpdates();
-    });
+    setInterval(loadGallery, 15000);
   </script>
 </body>
 </html>
+
 
 
 
