@@ -3,43 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Off The Ladder Construction — Contact</title>
+  <title>Contact — Off The Ladder Construction</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Unified sticky header -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="/index.html">Off The Ladder Construction</a>
-
-    <nav class="main-nav">
-      <a href="/index.html"   class="nav-link">Story</a>
-      <a href="/gallery.html" class="nav-link">Gallery</a>
-      <a href="/contact.html" class="nav-link">Contact</a>
-    </nav>
-  </div>
-</header>
-
-  <main class="main">
-    <div class="container">
-      <h2>Get a quote</h2>
-      <p>Tell us a bit about your project and we’ll get right back to you.</p>
-      <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <label for="name">Name</label>
-        <input id="name" name="name" required />
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email" required />
-        <label for="phone">Phone</label>
-        <input id="phone" name="phone" />
-        <label for="msg">Project details</label>
-        <textarea id="msg" name="message" required></textarea>
-        <button type="submit">Send</button>
-      </form>
-      <p class="small" style="margin-top:16px">Prefer email? <a href="mailto:hello@offtheladder.com">hello@offtheladder.com</a></p>
+  <!-- Sticky unified header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/index.html">Off The Ladder Construction</a>
+      <nav class="main-nav">
+        <a href="/index.html" class="nav-link">Story</a>
+        <a href="/gallery.html" class="nav-link">Gallery</a>
+        <a href="/contact.html" class="nav-link active">Contact</a>
+      </nav>
     </div>
+  </header>
+
+  <main class="container">
+    <h1>Get a Quote</h1>
+    <p>Tell us a bit about your project and we’ll get right back to you.</p>
+
+    <form class="contact-form">
+      <label>Name<br /><input type="text" name="name" required /></label><br />
+      <label>Email<br /><input type="email" name="email" required /></label><br />
+      <label>Phone<br /><input type="tel" name="phone" required /></label><br />
+      <label>Project details<br /><textarea name="details" rows="5" required></textarea></label><br />
+      <button type="submit" class="btn">Send</button>
+    </form>
+
+    <p style="margin-top:1rem;">Prefer email? <a href="mailto:hello@offtheladder.com">hello@offtheladder.com</a></p>
   </main>
-  <footer class="footer">
-    <div class="container">© 2025 Off The Ladder Construction. All rights reserved.</div>
-  </footer>
+
+  <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
+
+  <style>
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      max-width: 500px;
+      padding: .5rem;
+      margin-top: .25rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .btn {
+      background: #5a2ea6;
+      color: white;
+      border: none;
+      padding: .6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn:hover {
+      background: #4b2391;
+    }
+  </style>
 </body>
 </html>
+
