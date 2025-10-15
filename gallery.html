@@ -2,82 +2,112 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Off The Ladder Construction — Gallery</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recent Work — Off The Ladder Construction</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fafafa;
+      color: #222;
+    }
+    header {
+      background: #5a3ea0;
+      color: #fff;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      color: #5a3ea0;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    #gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    #gallery figure {
+      margin: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background: white;
+    }
+    #gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    #gallery img:hover {
+      transform: scale(1.03);
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 2rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container nav">
-      <div class="brand">
-        <div class="brand-logo" aria-hidden="true"></div>
-        <h1>Off The Ladder Construction</h1>
-      </div>
-      <nav class="menu" aria-label="primary">
-        <a href="index.html">Story</a>
-        <a href="gallery.html" class="active">Gallery</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </header>
-<main>
-  <section class="section">
-    <div class="container">
-      <h2>Recent Work</h2>
+  <header>Off The Ladder Construction</header>
+  <main>
+    <h1>Recent Work</h1>
+    <section id="gallery">Loading gallery...</section>
+  </main>
+  <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
 
-      <!-- Cloudinary Gallery (grid, not a slideshow) -->
-      <link rel="stylesheet" href="https://product-gallery.cloudinary.com/all.min.css">
-      <script src="https://product-gallery.cloudinary.com/all.min.js"></script>
+  <script>
+    const ENDPOINT = "https://otl-gallery-fetcher.lance-c84.workers.dev/";
 
-      <div id="otl-gallery" style="margin-top:1rem"></div>
+    async function loadGallery() {
+      try {
+        const res = await fetch(ENDPOINT);
+        const data = await res.json();
+        const container = document.getElementById('gallery');
+        container.innerHTML = '';
 
-      <script>
-        // Your cloud name
-        const cloudName = "dttivrbf0";
+        if (!data.resources || data.resources.length === 0) {
+          container.innerHTML = '<p style="text-align:center;">No images found yet.</p>';
+          return;
+        }
 
-        // Display all images uploaded into the otl-gallery folder
-        const gallery = cloudinary.galleryWidget({
-          container: "#otl-gallery",
-          cloudName,
-          mediaAssets: [{ resourceType: "image", directory: "otl-gallery" }],
-          carouselStyle: "none",
-          layoutParams: {
-            gallery: { columns: 3, spacing: 10, aspectRatio: "auto" },
-            // thumbnails sizes are just hints; Cloudinary will serve responsive images
-            thumbnails: { width: 320, height: 240 }
-          },
-          zoom: true,
-          themeProps: {
-            primary: "#5E2CA5",
-            onPrimary: "#ffffff",
-            text: "#1f1f1f",
-            surface: "#ffffff"
-          }
+        data.resources.forEach(img => {
+          const thumb = `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_600,h_400/${img.public_id}.${img.format}`;
+          const full = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${img.public_id}.${img.format}`;
+
+          const fig = document.createElement('figure');
+          const a = document.createElement('a');
+          const image = document.createElement('img');
+
+          a.href = full;
+          a.target = '_blank';
+          image.src = thumb;
+          image.alt = img.display_name || 'Gallery Image';
+          a.appendChild(image);
+          fig.appendChild(a);
+          container.appendChild(fig);
         });
+      } catch (err) {
+        console.error(err);
+        document.getElementById('gallery').innerHTML =
+          '<p style="text-align:center;">Unable to load gallery. Please try again later.</p>';
+      }
+    }
 
-        gallery.render();
-
-        // Optional: tweak columns on small screens
-        const mq = window.matchMedia("(max-width: 640px)");
-        const updateCols = () => {
-          gallery.update({
-            layoutParams: { gallery: { columns: mq.matches ? 2 : 3, spacing: 8, aspectRatio: "auto" } }
-          });
-        };
-        mq.addEventListener?.('change', updateCols);
-        updateCols();
-      </script>
-
-      <p style="text-align:center;margin-top:1rem;color:#666">
-        New photos appear here automatically after uploading.
-      </p>
-    </div>
-  </section>
-</main>
-
-
-  <footer class="footer">
-    <div class="container">© 2025 Off The Ladder Construction. All rights reserved.</div>
-  </footer>
+    loadGallery();
+  </script>
 </body>
 </html>
+
