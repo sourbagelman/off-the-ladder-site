@@ -8,7 +8,7 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="topbar-inner">
+    <div class="topbar">
       <a class="brand" href="/index.html">Off The Ladder Construction</a>
       <nav class="main-nav">
         <a href="/index.html" class="nav-link">Story</a>
@@ -19,30 +19,23 @@
   </header>
 
   <main class="container">
-    <h1>Get a Quote</h1>
+    <h1>Get a quote</h1>
     <p>Tell us a bit about your project and we’ll get right back to you.</p>
 
-    <form class="contact-form">
-      <label>Name<br /><input type="text" name="name" required /></label><br />
-      <label>Email<br /><input type="email" name="email" required /></label><br />
-      <label>Phone<br /><input type="tel" name="phone" required /></label><br />
-      <label>Project details<br /><textarea name="details" rows="5" required></textarea></label><br />
-      <button type="submit" class="btn">Send</button>
+    <form class="contact-form" action="https://formspree.io/f/your-id" method="POST">
+      <label>Name<br><input type="text" name="name" required></label><br>
+      <label>Email<br><input type="email" name="email" required></label><br>
+      <label>Phone<br><input type="tel" name="phone" required></label><br>
+      <label>Project details<br><textarea name="details" rows="6" required></textarea></label><br>
+      <button class="btn" type="submit">Send</button>
     </form>
 
-    <p style="margin-top:1rem;">Prefer email? <a href="mailto:hello@offtheladder.com">hello@offtheladder.com</a></p>
+    <p style="margin-top:1rem">
+      Prefer email? <a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a>
+    </p>
   </main>
 
   <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
-
-  <style>
-    .contact-form input, .contact-form textarea {
-      width: 100%; max-width: 500px; padding: .5rem; margin-top: .25rem; margin-bottom: 1rem;
-      border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;
-    }
-    .btn { background:#5a2ea6; color:#fff; border:none; padding:.6rem 1rem; border-radius:6px; font-weight:600; cursor:pointer; }
-    .btn:hover { background:#4b2391; }
-  </style>
 </body>
 </html>
 
