@@ -17,37 +17,18 @@
       border-radius: 10px;
       overflow: hidden;
       background: #fff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
     }
     #gallery img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.25s ease;
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .25s ease;
     }
-    #gallery img:hover {
-      transform: scale(1.03);
-    }
-    .upload-link {
-      display: inline-block;
-      margin: 1rem 0 2rem;
-      background: #5a2ea6;
-      color: #fff;
-      padding: 0.6rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .upload-link:hover {
-      background: #4b2391;
-    }
+    #gallery img:hover { transform: scale(1.03); }
   </style>
 </head>
 <body>
-  <!-- Sticky unified header -->
   <header class="site-header">
-    <div class="container header-inner">
+    <div class="topbar-inner">
       <a class="brand" href="/index.html">Off The Ladder Construction</a>
       <nav class="main-nav">
         <a href="/index.html" class="nav-link">Story</a>
@@ -59,7 +40,6 @@
 
   <main class="container">
     <h1>Recent Work</h1>
-    <a class="upload-link" href="/upload">+ Upload New Photo</a>
     <section id="gallery">Loading gallery...</section>
   </main>
 
@@ -82,14 +62,13 @@
 
         data.resources.forEach((img) => {
           const thumb = `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_600,h_400/${img.public_id}.${img.format}`;
-          const full = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${img.public_id}.${img.format}`;
+          const full  = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${img.public_id}.${img.format}`;
 
           const fig = document.createElement("figure");
-          const a = document.createElement("a");
+          const a   = document.createElement("a");
           const image = document.createElement("img");
 
-          a.href = full;
-          a.target = "_blank";
+          a.href = full; a.target = "_blank";
           image.src = thumb;
           image.alt = img.display_name || "Gallery Image";
           a.appendChild(image);
@@ -107,6 +86,7 @@
   </script>
 </body>
 </html>
+
 
 
 
