@@ -39,3 +39,48 @@ textarea{min-height:140px;resize:vertical}
 button{margin-top:12px;background:var(--purple);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer;box-shadow:0 6px 14px rgba(79,45,127,.25)}
 button:hover{background:var(--purple-700)}
 .notice{background:#faf7ff;border:1px dashed rgba(79,45,127,.35);padding:12px;border-radius:12px;color:#432f58}
+/* ——— Sticky top bar (centered brand, right-aligned nav) ——— */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #5a2ea6;           /* rich purple */
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,.12);
+}
+.topbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;  /* brand centered via transform trick */
+  align-items: center;
+  position: relative;
+}
+.brand {
+  font-weight: 700;
+  letter-spacing: .2px;
+  text-decoration: none;
+  color: #fff;
+  position: absolute; left: 50%; transform: translateX(-50%); /* center brand */
+  white-space: nowrap;
+}
+.main-nav {
+  justify-self: end;
+  display: flex;
+  gap: 18px;
+}
+.main-nav .nav-link {
+  color: #e9dcff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.main-nav .nav-link:hover { color: #fff; background: rgba(255,255,255,.08); }
+.main-nav .nav-link.active { color: #fff; background: rgba(255,255,255,.18); }
+
+/* page container spacing so content doesn’t hide behind sticky bar */
+.container { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+
+footer { max-width: 1100px; margin: 32px auto 48px; padding: 0 16px; color:#6b6b6b; }
