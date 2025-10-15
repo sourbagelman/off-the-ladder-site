@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Sticky purple header -->
   <header class="site-header">
     <div class="topbar">
       <a class="brand" href="/index.html">Off The Ladder Construction</a>
@@ -22,20 +23,40 @@
     <h1>Get a quote</h1>
     <p>Tell us a bit about your project and we’ll get right back to you.</p>
 
-    <form class="contact-form" action="https://formspree.io/f/your-id" method="POST">
-      <label>Name<br><input type="text" name="name" required></label><br>
-      <label>Email<br><input type="email" name="email" required></label><br>
-      <label>Phone<br><input type="tel" name="phone" required></label><br>
-      <label>Project details<br><textarea name="details" rows="6" required></textarea></label><br>
-      <button class="btn" type="submit">Send</button>
+    <!-- Static form with no submission backend -->
+    <form onsubmit="return openEmail()" id="contactForm">
+      <label>Name<br><input type="text" id="name" required></label><br>
+      <label>Email<br><input type="email" id="email" required></label><br>
+      <label>Phone<br><input type="tel" id="phone"></label><br>
+      <label>Project details<br><textarea id="details" rows="6" required></textarea></label><br>
+      <button class="btn" type="submit">Send Email</button>
     </form>
 
-    <p style="margin-top:1rem">
-      Prefer email? <a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a>
+    <p style="margin-top:1rem;">
+      Prefer direct email? <a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a>
     </p>
   </main>
 
   <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
+
+  <script>
+    // Builds a mailto link dynamically and opens it in the user's email app
+    function openEmail() {
+      const name = encodeURIComponent(document.getElementById('name').value);
+      const email = encodeURIComponent(document.getElementById('email').value);
+      const phone = encodeURIComponent(document.getElementById('phone').value);
+      const details = encodeURIComponent(document.getElementById('details').value);
+
+      const subject = `Quote request from ${name}`;
+      const body = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0A%0AProject Details:%0A${details}`;
+      const mailtoLink = `mailto:Dave@otldfw.com?subject=${subject}&body=${body}`;
+
+      window.location.href = mailtoLink;
+      return false; // prevent form submission/refresh
+    }
+  </script>
 </body>
 </html>
+
+
 
