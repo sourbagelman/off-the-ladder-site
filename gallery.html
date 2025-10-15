@@ -5,30 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Recent Work — Off The Ladder Construction</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    #gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      min-height: 150px;
-    }
-    #gallery figure {
-      margin: 0;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,.1);
-    }
-    #gallery img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform .25s ease;
-    }
-    #gallery img:hover { transform: scale(1.03); }
-  </style>
 </head>
 <body>
   <header class="site-header">
-    <div class="topbar-inner">
+    <div class="topbar">
       <a class="brand" href="/index.html">Off The Ladder Construction</a>
       <nav class="main-nav">
         <a href="/index.html" class="nav-link">Story</a>
@@ -40,7 +20,7 @@
 
   <main class="container">
     <h1>Recent Work</h1>
-    <section id="gallery">Loading gallery...</section>
+    <section id="gallery" class="gallery-grid">Loading gallery...</section>
   </main>
 
   <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
@@ -52,35 +32,29 @@
       try {
         const res = await fetch(ENDPOINT, { cache: 'no-store' });
         const data = await res.json();
-        const container = document.getElementById("gallery");
-        container.innerHTML = "";
+        const wrap = document.getElementById("gallery");
+        wrap.innerHTML = "";
 
-        if (!data.resources || data.resources.length === 0) {
-          container.innerHTML = "<p>No images found yet. Upload some to get started!</p>";
+        if (!data.resources || !data.resources.length) {
+          wrap.innerHTML = "<p>No images found yet. Upload some to get started!</p>";
           return;
         }
 
-        data.resources.forEach((img) => {
-          const thumb = `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_600,h_400/${img.public_id}.${img.format}`;
-          const full  = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${img.public_id}.${img.format}`;
-
+        data.resources.forEach(r => {
+          const thumb = `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_900,h_650/${r.public_id}.${r.format}`;
+          const full  = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${r.public_id}.${r.format}`;
           const fig = document.createElement("figure");
-          const a   = document.createElement("a");
-          const image = document.createElement("img");
-
+          const a = document.createElement("a");
+          const img = document.createElement("img");
           a.href = full; a.target = "_blank";
-          image.src = thumb;
-          image.alt = img.display_name || "Gallery Image";
-          a.appendChild(image);
-          fig.appendChild(a);
-          container.appendChild(fig);
+          img.src = thumb; img.alt = r.display_name || "Gallery image";
+          a.appendChild(img); fig.appendChild(a); wrap.appendChild(fig);
         });
-      } catch (err) {
+      } catch (e) {
         document.getElementById("gallery").innerHTML =
-          "<p>Unable to load gallery right now. Please try again later.</p>";
+          "<p>Unable to load the gallery right now. Please try again later.</p>";
       }
     }
-
     loadGallery();
     setInterval(loadGallery, 15000);
   </script>
