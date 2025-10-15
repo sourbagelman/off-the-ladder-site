@@ -5,19 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recent Work — Off The Ladder Construction</title>
   <style>
+    :root {
+      --brand: #5a3ea0;
+      --bg: #fafafa;
+      --text: #222;
+    }
     body {
       font-family: system-ui, -apple-system, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #fafafa;
-      color: #222;
+      background: var(--bg);
+      color: var(--text);
     }
     header {
-      background: #5a3ea0;
+      background: var(--brand);
       color: #fff;
       padding: 1rem 2rem;
-      text-align: center;
       font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header a {
+      background: #fff;
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    header a:hover {
+      background: #eae1ff;
     }
     main {
       max-width: 1000px;
@@ -25,7 +43,7 @@
       padding: 0 1rem;
     }
     h1 {
-      color: #5a3ea0;
+      color: var(--brand);
       text-align: center;
       margin-bottom: 1rem;
     }
@@ -58,14 +76,24 @@
       color: #777;
       font-size: 0.9rem;
     }
+    .loading {
+      text-align: center;
+      color: #777;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body>
-  <header>Off The Ladder Construction</header>
+  <header>
+    <span>Off The Ladder Construction</span>
+    <a href="/upload">+ Upload New Photo</a>
+  </header>
+
   <main>
     <h1>Recent Work</h1>
-    <section id="gallery">Loading gallery...</section>
+    <section id="gallery" class="loading">Loading gallery...</section>
   </main>
+
   <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
 
   <script>
@@ -79,7 +107,7 @@
         container.innerHTML = '';
 
         if (!data.resources || data.resources.length === 0) {
-          container.innerHTML = '<p style="text-align:center;">No images found yet.</p>';
+          container.innerHTML = '<p style="text-align:center;">No images found yet. Upload some to get started!</p>';
           return;
         }
 
@@ -110,4 +138,5 @@
   </script>
 </body>
 </html>
+
 
