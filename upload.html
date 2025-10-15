@@ -1,51 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload New Photos</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Upload Photos — Off The Ladder</title>
   <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: #f4f4f4;
-    }
-    form {
-      background: white;
-      padding: 2em;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    input[type="file"] {
-      margin-bottom: 1em;
-    }
+    :root { --brand:#5a3ea0; }
+    body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+           margin:0; background:#fafafa; color:#222; }
+    header { background:var(--brand); color:#fff; padding:1rem 1.5rem; font-weight:600; }
+    main { max-width:800px; margin:2rem auto; padding:0 1rem; }
+    h1 { margin:0 0 1rem; color:var(--brand); }
+    .card { background:#fff; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,.08);
+            padding:1.25rem; }
+    .controls { display:flex; gap:.75rem; flex-wrap:wrap; align-items:center; }
+    input[type=file] { padding:.6rem; border:1px solid #ddd; border-radius:10px; background:#fff; }
+    button { background:var(--brand); color:#fff; border:0; border-radius:10px; padding:.7rem 1rem;
+             cursor:pointer; font-weight:600; }
+    button[disabled]{ opacity:.5; cursor:not-allowed; }
+    .status { margin-top:1rem; font-size:.95rem; color:#555; }
+    .grid { margin-top:1rem; display:grid; gap:.75rem;
+            grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); }
+    .thumb { border-radius:10px; overflow:hidden; background:#fff; border:1px solid #eee; }
+    .thumb img { width:100%; height:150px; object-fit:cover; display:block; }
+    .progress { height:6px; background:#eee; border-radius:999px; overflow:hidden; margin-top:.5rem; }
+    .progress > span { display:block; height:100%; width:0; background:var(--brand); transition:width .2s; }
+    .note { font-size:.9rem; color:#666; margin:.5rem 0 0; }
+    .link { color:var(--brand); text-decoration:none; font-weight:600; }
   </style>
 </head>
 <body>
-  <h1>Upload a Photo to the Gallery</h1>
+  <header>Off The Ladder Construction — Upload</header>
+  <main>
+    <h1>Upload Photos</h1>
+    <div class="card">
+      <div class="controls">
+        <input id="fileInput" type="file" accept="image/*" multiple />
+        <button id="uploadBtn">Upload</button>
+        <a class="link" href="/gallery">View gallery</a>
+      </div>
+      <p class="note">Tip: you can select multiple images at once. They’ll appear in the gallery after upload.</p>
 
-  <form method="post" enctype="multipart/form-data"
-    action="https://api.cloudinary.com/v1_1/dttivrbf0/image/upload">
-    
-    <!-- Hidden preset for Cloudinary -->
-    <input type="hidden" name="upload_preset" value="otl-uploads">
+      <div class="status" id="status">Waiting for files…</div>
+      <div class="progress"><span id="bar"></span></div>
 
-    <!-- Hidden tag to tell Cloudinary which gallery to add to -->
-    <input type="hidden" name="tags" value="otl-gallery">
+      <div class="grid" id="grid"></div>
+    </div>
+  </main>
 
-    <!-- File input -->
-    <input type="file" name="file" accept="image/*" required>
+  <script>
+    // Your Cloudinary details (unsigned preset)
+    const CLOUD_NAME = "dttivrbf0";
+    const UPLOAD_PRESET = "otl-uploads";        // preset already targets the otl-gallery folder
+    const ENDPOINT = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
-    <br>
-    <button type="submit">Upload</button>
-  </form>
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const statusEl = document.getElementById('status');
+    const bar = document.getElementById('bar');
+    const grid = document.getElementById('grid');
 
-  <p>After uploading, refresh your <a href="/gallery.html" target="_blank">gallery page</a> to see it live.</p>
+    function setProgress(pct){
+      bar.style.width = pct + '%';
+    }
+
+    async function uploadOne(file){
+      const form = new FormData();
+      form.append('file', file);
+      form.append('upload_preset', UPLOAD_PRESET);
+      // If you ever want to override the folder from the preset:
+      // form.append('folder', 'otl-gallery');
+
+      // Use XHR to track progress for each file
+      const xhr = new XMLHttpRequest();
+      const p = new Promise((resolve, reject) => {
+        xhr.open('POST', ENDPOINT);
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try { resolve(JSON.parse(xhr.responseText)); }
+            catch(e){ reject(e); }
+          } else {
+            reject(new Error('Upload failed: ' + xhr.status));
+          }
+        };
+        xhr.onerror = () => reject(new Error('Network error'));
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            // Combined progress is handled outside; this is per-file if desired
+          }
+        };
+        xhr.send(form);
+      });
+      return p;
+    }
+
+    uploadBtn.addEventListener('click', async () => {
+      const files = Array.from(fileInput.files || []);
+      if (!files.length) {
+        statusEl.textContent = 'Please choose at least one image.';
+        return;
+      }
+
+      uploadBtn.disabled = true;
+      setProgress(0);
+      statusEl.textContent = 'Uploading…';
+
+      let completed = 0;
+      const total = files.length;
+
+      for (const file of files) {
+        try {
+          const res = await uploadOne(file);
+          completed++;
+          const pct = Math.round((completed/total)*100);
+          setProgress(pct);
+          statusEl.textContent = `Uploaded ${completed} of ${total}`;
+
+          // Show a tiny preview card
+          const thumbUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/c_fill,g_auto,f_auto,q_auto,w_320,h_220/${res.public_id}.${res.format}`;
+          const fullUrl  = res.secure_url;
+          const div = document.createElement('div');
+          div.className = 'thumb';
+          div.innerHTML = `<a href="${fullUrl}" target="_blank" rel="noopener">
+                             <img src="${thumbUrl}" alt="${res.display_name || 'Upload'}">
+                           </a>`;
+          grid.prepend(div);
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = 'One or more uploads failed. Please try again.';
+        }
+      }
+
+      // Small delay then jump to gallery
+      setTimeout(() => { window.location.href = '/gallery'; }, 900);
+    });
+  </script>
 </body>
 </html>
 
