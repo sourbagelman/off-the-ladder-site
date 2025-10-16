@@ -1,61 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Off The Ladder Construction</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>OTL Construction — Concrete • Remodels • Outdoor</title>
+  <meta name="description" content="Reliable residential and light commercial construction. Concrete pads, remodels, outdoor spaces and more.">
+  <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="topbar">
-      <a class="brand" href="/index.html">Off The Ladder Construction</a>
-      <nav class="main-nav">
-        <a href="/index.html" class="nav-link active">Story</a>
-        <a href="/gallery.html" class="nav-link">Gallery</a>
-        <a href="/contact.html" class="nav-link">Contact</a>
-      </nav>
+
+<header class="site-header">
+  <div class="wrap row">
+    <a class="logo" href="/">OTL</a>
+
+    <nav class="desktop">
+      <a href="/#services">Services</a>
+      <a href="/gallery.html">Gallery</a>
+      <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
     </div>
-  </header>
+  </div>
+  <div class="mobile-menu">
+    <a href="/#services">Services</a>
+    <a href="/gallery.html">Gallery</a>
+    <a href="/contact.html" class="btn btn--secondary cta">Request a Quote</a>
+  </div>
+</header>
 
-  <main class="container">
-    <h1>Built Right. No Drama.</h1>
-    <p>
-      Off The Ladder Construction delivers straightforward, high-quality work for homes
-      and small businesses across DFW. From remodels and repairs to additions and outdoor
-      builds, we keep the process simple and the craftsmanship tight.
-    </p>
-    <p><em>Fully insured • Local references available</em></p>
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Quality craftsmanship. Clear communication. Zero drama.</h1>
+      <p>We build the stuff you actually need—concrete pads, remodels, and outdoor upgrades—done on schedule and done right.</p>
+      <div class="actions">
+        <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
+        <a href="/gallery.html" class="btn btn--secondary">View Projects</a>
+      </div>
+    </div>
+  </section>
 
-    <section class="info-grid" style="margin-top:18px">
-      <div class="info-box">
-        <h3>What we do</h3>
-        <ul>
-          <li>Remodels & renovations</li>
-          <li>Kitchen & bath updates</li>
-          <li>Decks, patios & pergolas</li>
-          <li>Doors, trim & finish carpentry</li>
-          <li>Light commercial build-outs</li>
-        </ul>
-        <small>Serving the greater DFW area.</small>
-      </div>
-      <div class="info-box">
-        <h3>Straight talk</h3>
-        <p>Clear scope, fair pricing, and timelines you can rely on. If it needs saying, we say it.</p>
-      </div>
-      <div class="info-box">
-        <h3>Clean work</h3>
-        <p>We treat the jobsite like it’s our own place—organized, protected, and buttoned-up daily.</p>
-      </div>
-      <div class="info-box">
-        <h3>Solid results</h3>
-        <p>No shortcuts, no gimmicks. Just durable work that looks sharp and holds up.</p>
-      </div>
-    </section>
-  </main>
+  <!-- Services -->
+  <section id="services" class="section">
+    <div class="wrap">
+      <h2>Services</h2>
+      <p class="sub">Plain-speak scopes with predictable timelines. Here are our most requested:</p>
 
-  <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
+      <div class="grid">
+        <article class="card">
+          <img src="/img/service-concrete.jpg" alt="Freshly finished concrete pad">
+          <div class="body">
+            <h3>Concrete Pads</h3>
+            <p>Precision-formed pads for sheds, patios, and equipment. Expansion joints and proper drainage included.</p>
+            <a class="card-link" href="/contact.html">Learn more →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="/img/service-remodel.jpg" alt="Kitchen remodel with new cabinets">
+          <div class="body">
+            <h3>Interior Remodels</h3>
+            <p>Kitchens, baths, and full refreshes. Clean site practices and tight punch lists.</p>
+            <a class="card-link" href="/contact.html">Learn more →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="/img/service-outdoor.jpg" alt="Covered outdoor patio space">
+          <div class="body">
+            <h3>Outdoor Spaces</h3>
+            <p>Patios, pergolas, small additions. Built for Texas weather and weekend living.</p>
+            <a class="card-link" href="/contact.html">Learn more →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>OTL Construction</h4>
+        <p>Serving DFW and surrounding areas.</p>
+        <p><a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a> • (XXX) XXX-XXXX</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <p><a href="/#services">Services</a><br>
+           <a href="/gallery.html">Gallery</a><br>
+           <a href="/contact.html">Request a Quote</a></p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <p>Mon–Fri 8:00–5:00<br>Sat by appointment</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="y"></span> OTL Construction. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/js/site.js"></script>
+<script>document.getElementById('y').textContent = new Date().getFullYear()</script>
 </body>
 </html>
+
 
 
