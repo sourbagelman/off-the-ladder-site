@@ -1,65 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Request a Quote — OTL Construction</title>
+  <title>Request a Quote — Off The Ladder Construction</title>
   <meta name="description" content="Request a quote for concrete pads, remodels, and outdoor spaces in DFW.">
-  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
 </head>
-  <meta name="description" content="Residential & light commercial construction in DFW: concrete pads, interior remodels, outdoor spaces. On schedule, done right.">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="Off The Ladder Construction">
-<meta property="og:description" content="Concrete pads, remodels, and outdoor spaces across DFW.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://otldfw.com/og.jpg">
-<meta name="theme-color" content="#5a2ea6">
-
 <body>
 
-<header class="site-header">
-  <div class="wrap row">
-    <a class="logo" href="/">OTL</a>
-    <nav class="desktop">
-      <a href="/#services">Services</a>
-      <a href="/gallery.html">Gallery</a>
-      <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
-    </nav>
-    <div class="nav-actions"><button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button></div>
-  </div>
-  <div class="mobile-menu">
-    <a href="/#services">Services</a>
-    <a href="/gallery.html">Gallery</a>
-    <a href="/contact.html" class="btn btn--secondary cta">Request a Quote</a>
-  </div>
-</header>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="topbar">
+      <a class="brand" href="/index.html">Off The Ladder Construction</a>
+      <nav class="main-nav">
+        <a href="/index.html" class="nav-link">Story</a>
+        <a href="/gallery.html" class="nav-link">Gallery</a>
+        <a href="/contact.html" class="nav-link active">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<main class="section">
-  <div class="wrap">
+  <!-- Main Content -->
+  <main class="container">
     <h1 class="mt-0">Request a Quote</h1>
-    <p class="sub">Tell us what you need. We’ll reply within one business day.</p>
+    <p class="sub">Tell us what you need — we’ll reply within one business day.</p>
 
-    <form class="form" id="quoteForm" action="mailto:Dave@otldfw.com" method="post" enctype="text/plain">
+    <form class="form" id="quoteForm">
       <div class="field">
         <label for="name">Full name</label>
-        <input id="name" name="Name" type="text" required placeholder="Jane Doe">
+        <input id="name" name="name" type="text" required placeholder="Jane Doe" />
       </div>
 
       <div class="field">
         <label for="email">Email</label>
-        <input id="email" name="Email" type="email" required placeholder="jane@example.com">
+        <input id="email" name="email" type="email" required placeholder="jane@example.com" />
       </div>
 
       <div class="field">
         <label for="phone">Phone</label>
-        <input id="phone" name="Phone" type="tel" placeholder="(###) ###-####">
+        <input id="phone" name="phone" type="tel" placeholder="(###) ###-####" />
       </div>
 
       <div class="field">
         <label for="service">Service type</label>
-        <select id="service" name="Service">
+        <select id="service" name="service">
           <option>Concrete pad</option>
           <option>Interior remodel</option>
           <option>Outdoor space</option>
@@ -69,18 +54,16 @@
 
       <div class="field">
         <label for="message">Project details</label>
-        <textarea id="message" name="Message" rows="5" required placeholder="Size, location, timeline, anything we should know…"></textarea>
-        <div class="helper">By submitting, you agree we may email or call you about this request.</div>
+        <textarea id="message" name="message" rows="5" required placeholder="Size, location, timeline, anything we should know…"></textarea>
       </div>
 
-      <button class="btn btn--primary" type="submit">Send Request</button>
-      <a class="btn btn--secondary" href="mailto:Dave@otldfw.com?subject=Quote%20Request">Or email us directly</a>
+      <button class="btn" type="submit">Send Request</button>
+      <p id="formNote" class="sub" role="status"></p>
     </form>
-  </div>
-</main>
+  </main>
 
-<footer class="site-footer">
-  <div class="wrap">
+  <!-- Footer -->
+  <footer>
     <div class="footer-grid">
       <div>
         <h4>OTL Construction</h4>
@@ -88,34 +71,66 @@
       </div>
       <div>
         <h4>Quick Links</h4>
-        <p><a href="/">Home</a><br><a href="/gallery.html">Gallery</a></p>
+        <p><a href="/index.html">Home</a><br><a href="/gallery.html">Gallery</a></p>
       </div>
       <div>
         <h4>Hours</h4>
-        <p>Mon–Fri 8:00–5:00</p>
+        <p>Mon-Fri 8:00-5:00</p>
       </div>
     </div>
     <div class="footer-bottom">© <span id="y"></span> OTL Construction.</div>
-  </div>
-</footer>
+  </footer>
 
-<script src="/js/site.js"></script>
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
+  <!-- Scripts -->
+  <script src="/js/site.js"></script>
+  <script>
+    // auto-update year
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-  // Light client-side validation + mailto fallback notice
-  const form = document.getElementById('quoteForm');
-  form.addEventListener('submit', (e) => {
-    // If any required is missing, let browser show native errors
-    const ok = form.checkValidity();
-    if (!ok) return;
+    // Worker endpoint
+    const ENDPOINT = "https://otl-contact.lance-c84.workers.dev/";
+    const form = document.getElementById('quoteForm');
+    const note = document.getElementById('formNote');
 
-    // Mailto opens the user’s email client; show a quick heads-up
-    alert("Your email app will open to send this request to Dave@otldfw.com.\nIf it doesn't, click the direct email button.");
-  });
-</script>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name:   document.getElementById('name')?.value?.trim(),
+        email:  document.getElementById('email')?.value?.trim(),
+        phone:  document.getElementById('phone')?.value?.trim(),
+        service:document.getElementById('service')?.value || "",
+        message:document.getElementById('message')?.value?.trim()
+      };
+
+      if (!data.name || !data.email || !data.message) {
+        note.textContent = "Please fill name, email, and message.";
+        return;
+      }
+
+      note.textContent = "Sending…";
+      try {
+        const res = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        const j = await res.json();
+
+        if (j.ok) {
+          note.textContent = "Thanks! We’ll reply within one business day.";
+          form.reset();
+        } else {
+          note.textContent = "Send failed: " + (j.error || "Unknown error");
+        }
+      } catch (err) {
+        note.textContent = "Network error. Please try again.";
+      }
+    });
+  </script>
 </body>
 </html>
+
 
 
 
