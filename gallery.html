@@ -1,65 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recent Work — Off The Ladder Construction</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Gallery — OTL Construction</title>
+  <meta name="description" content="Project photos from recent OTL Construction jobs.">
+  <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="topbar">
-      <a class="brand" href="/index.html">Off The Ladder Construction</a>
-      <nav class="main-nav">
-        <a href="/index.html" class="nav-link">Story</a>
-        <a href="/gallery.html" class="nav-link active">Gallery</a>
-        <a href="/contact.html" class="nav-link">Contact</a>
-      </nav>
+
+<header class="site-header">
+  <div class="wrap row">
+    <a class="logo" href="/">OTL</a>
+    <nav class="desktop">
+      <a href="/#services">Services</a>
+      <a href="/gallery.html">Gallery</a>
+      <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
+    </nav>
+    <div class="nav-actions"><button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button></div>
+  </div>
+  <div class="mobile-menu">
+    <a href="/#services">Services</a>
+    <a href="/gallery.html">Gallery</a>
+    <a href="/contact.html" class="btn btn--secondary cta">Request a Quote</a>
+  </div>
+</header>
+
+<main class="section">
+  <div class="wrap">
+    <h1 class="mt-0">Gallery</h1>
+    <p class="sub">A few recent projects. We’ll add more as we go.</p>
+
+    <div class="grid">
+      <!-- Replace with your real images -->
+      <article class="card">
+        <img src="/img/gallery-1.jpg" alt="Concrete pad pour">
+        <div class="body"><h3>Concrete Pad</h3><p>4” slab, proper base, clean broom finish.</p></div>
+      </article>
+      <article class="card">
+        <img src="/img/gallery-2.jpg" alt="Patio cover build">
+        <div class="body"><h3>Patio Cover</h3><p>Shade for Texas summers, built to code.</p></div>
+      </article>
+      <article class="card">
+        <img src="/img/gallery-3.jpg" alt="Kitchen refresh">
+        <div class="body"><h3>Kitchen Refresh</h3><p>New surfaces, better storage, brighter feel.</p></div>
+      </article>
     </div>
-  </header>
+  </div>
+</main>
 
-  <main class="container">
-    <h1>Recent Work</h1>
-    <section id="gallery" class="gallery-grid">Loading gallery...</section>
-  </main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>OTL Construction</h4>
+        <p><a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a></p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <p><a href="/">Home</a><br><a href="/contact.html">Request a Quote</a></p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <p>Mon–Fri 8:00–5:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="y"></span> OTL Construction.</div>
+  </div>
+</footer>
 
-  <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
-
-  <script>
-    const ENDPOINT = "https://otl-gallery-fetcher.lance-c84.workers.dev/";
-
-    async function loadGallery() {
-      try {
-        const res = await fetch(ENDPOINT, { cache: 'no-store' });
-        const data = await res.json();
-        const wrap = document.getElementById("gallery");
-        wrap.innerHTML = "";
-
-        if (!data.resources || !data.resources.length) {
-          wrap.innerHTML = "<p>No images found yet. Upload some to get started!</p>";
-          return;
-        }
-
-        data.resources.forEach(r => {
-          const thumb = `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_900,h_650/${r.public_id}.${r.format}`;
-          const full  = `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${r.public_id}.${r.format}`;
-          const fig = document.createElement("figure");
-          const a = document.createElement("a");
-          const img = document.createElement("img");
-          a.href = full; a.target = "_blank";
-          img.src = thumb; img.alt = r.display_name || "Gallery image";
-          a.appendChild(img); fig.appendChild(a); wrap.appendChild(fig);
-        });
-      } catch (e) {
-        document.getElementById("gallery").innerHTML =
-          "<p>Unable to load the gallery right now. Please try again later.</p>";
-      }
-    }
-    loadGallery();
-    setInterval(loadGallery, 15000);
-  </script>
+<script src="/js/site.js"></script>
+<script>document.getElementById('y').textContent = new Date().getFullYear()</script>
 </body>
 </html>
+
 
 
 
