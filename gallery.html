@@ -7,6 +7,27 @@
   <link rel="stylesheet" href="styles.css" />
   <meta name="description" content="Project photos from recent Off The Ladder Construction jobs.">
 </head>
+  <div class="lb-backdrop" id="lb">
+  <button class="lb-close" aria-label="Close">×</button>
+  <img class="lb-img" alt="">
+</div>
+<script>
+  (function(){
+    const lb = document.getElementById('lb');
+    const lbImg = lb.querySelector('.lb-img');
+    const close = lb.querySelector('.lb-close');
+    document.getElementById('gallery').addEventListener('click', (e)=>{
+      const a = e.target.closest('a'); if(!a) return;
+      e.preventDefault();
+      lbImg.src = a.href; lb.classList.add('open');
+    });
+    function hide(){ lb.classList.remove('open'); lbImg.src=''; }
+    close.addEventListener('click', hide);
+    lb.addEventListener('click', (e)=>{ if(e.target===lb) hide(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hide(); });
+  })();
+</script>
+
 <body>
   <header class="site-header">
     <div class="topbar">
