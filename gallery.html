@@ -1,95 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gallery — OTL Construction</title>
-  <meta name="description" content="Project photos from recent OTL Construction jobs.">
-  <link rel="stylesheet" href="/css/site.css" />
+  <title>Recent Work — Off The Ladder Construction</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Project photos from recent Off The Ladder Construction jobs.">
 </head>
 <body>
-
-<header class="site-header">
-  <div class="wrap row">
-    <a class="logo" href="/">OTL</a>
-    <nav class="desktop">
-      <a href="/#services">Services</a>
-      <a href="/gallery.html">Gallery</a>
-      <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
-    </nav>
-    <div class="nav-actions"><button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button></div>
-  </div>
-  <div class="mobile-menu">
-    <a href="/#services">Services</a>
-    <a href="/gallery.html">Gallery</a>
-    <a href="/contact.html" class="btn btn--secondary cta">Request a Quote</a>
-  </div>
-</header>
-
-<main class="gallery">
-  <div class="wrap">
-    <h1 class="mt-0">Gallery</h1>
-    <p class="sub">Recent projects — concrete, remodels, and outdoor spaces.</p>
-
-    <!-- Pure image grid -->
-    <div class="gallery-grid">
-      <!-- Replace src paths with your actual images in /img/ -->
-      <figure class="gallery-item">
-        <img src="/img/gallery-1.jpg" alt="Concrete pad pour with broom finish" loading="lazy">
-        <figcaption class="gallery-caption">Concrete Pad — Broom Finish</figcaption>
-      </figure>
-
-      <figure class="gallery-item">
-        <img src="/img/gallery-2.jpg" alt="Covered patio build with posts and rafters" loading="lazy">
-        <figcaption class="gallery-caption">Covered Patio — Built to Code</figcaption>
-      </figure>
-
-      <figure class="gallery-item">
-        <img src="/img/gallery-3.jpg" alt="Kitchen refresh with new counters and paint" loading="lazy">
-        <figcaption class="gallery-caption">Kitchen Refresh</figcaption>
-      </figure>
-
-      <figure class="gallery-item">
-        <img src="/img/gallery-4.jpg" alt="Equipment slab with formed edges" loading="lazy">
-        <figcaption class="gallery-caption">Equipment Slab</figcaption>
-      </figure>
-
-      <figure class="gallery-item">
-        <img src="/img/gallery-5.jpg" alt="Pergola structure on patio" loading="lazy">
-        <figcaption class="gallery-caption">Pergola Addition</figcaption>
-      </figure>
-
-      <figure class="gallery-item">
-        <img src="/img/gallery-6.jpg" alt="Bathroom remodel tile and vanity" loading="lazy">
-        <figcaption class="gallery-caption">Bathroom Remodel</figcaption>
-      </figure>
+  <header class="site-header">
+    <div class="topbar">
+      <a class="brand" href="/index.html">Off The Ladder Construction</a>
+      <nav class="main-nav">
+        <a href="/index.html" class="nav-link">Story</a>
+        <a href="/gallery.html" class="nav-link active">Gallery</a>
+        <a href="/contact.html" class="nav-link">Contact</a>
+      </nav>
     </div>
-  </div>
-</main>
+  </header>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <h4>OTL Construction</h4>
-        <p>Serving DFW and surrounding areas.</p>
-        <p><a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a></p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <p><a href="/">Home</a><br><a href="/contact.html">Request a Quote</a></p>
-      </div>
-      <div>
-        <h4>Hours</h4>
-        <p>Mon–Fri 8:00–5:00</p>
-      </div>
-    </div>
-    <div class="footer-bottom">© <span id="y"></span> OTL Construction.</div>
-  </div>
-</footer>
+  <main class="container">
+    <h1 class="mt-0">Recent Work</h1>
+    <p class="sub">A live feed of our latest projects. New uploads appear automatically.</p>
 
-<script src="/js/site.js"></script>
-<script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+    <section id="gallery" class="gallery-grid" aria-live="polite">Loading gallery...</section>
+    <noscript><p>Please enable JavaScript to view the live gallery.</p></noscript>
+  </main>
+
+  <footer>© <span id="y"></span> Off The Ladder Construction. All rights reserved.</footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    const ENDPOINT = "https://otl-gallery-fetcher.lance-c84.workers.dev/";
+    const WRAP = document.getElementById("gallery");
+
+    function cldThumb(publicId, format, w, h) {
+      // responsive thumbnail with consistent aspect & smart crop
+      return `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_${w},h_${h}/${publicId}.${format}`;
+    }
+    function cldFull(publicId, format) {
+      // full image link (let Cloudinary pick best format/quality)
+      return `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${publicId}.${format}`;
+    }
+
+    function figureTemplate(r) {
+      const display = r.display_name || "Gallery image";
+      const alt = display.replace(/[_-]+/g,' ').trim();
+
+      // build elements
+      const fig = document.createElement("figure");
+      fig.className = "gallery-item";
+
+      const a = document.createElement("a");
+      a.href = cldFull(r.public_id, r.format);
+      a.target = "_blank";
+      a.rel = "noopener";
+
+      const img = document.createElement("img");
+      // responsive sources
+      img.src = cldThumb(r.public_id, r.format, 480, 360);
+      img.srcset = [
+        cldThumb(r.public_id, r.format, 480, 360) + " 480w",
+        cldThumb(r.public_id, r.format, 768, 560) + " 768w",
+        cldThumb(r.public_id, r.format, 1200, 867) + " 1200w",
+        cldThumb(r.public_id, r.format, 1600, 1156) + " 1600w"
+      ].join(", ");
+      img.sizes = "(max-width: 560px) 100vw, (max-width: 900px) 50vw, 33vw";
+      img.alt = alt;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.fetchPriority = "low";
+
+      const cap = document.createElement("figcaption");
+      cap.className = "gallery-caption";
+      cap.textContent = alt;
+
+      a.appendChild(img);
+      fig.appendChild(a);
+      fig.appendChild(cap);
+      return fig;
+    }
+
+    async function loadGallery() {
+      try {
+        const res = await fetch(ENDPOINT, { cache: 'no-store' });
+        if (!res.ok) throw new Error("Bad status " + res.status);
+        const data = await res.json();
+
+        WRAP.innerHTML = "";
+        const items = (data.resources || []).filter(Boolean);
+
+        if (!items.length) {
+          WRAP.innerHTML = "<p>No images found yet. Upload some to get started!</p>";
+          return;
+        }
+
+        items.forEach(r => WRAP.appendChild(figureTemplate(r)));
+      } catch (e) {
+        WRAP.innerHTML = "<p>Unable to load the gallery right now. Please try again later.</p>";
+        console.error(e);
+      }
+    }
+
+    // refresh every 15s while tab is visible
+    let timer = null;
+    function startLoop(){ if (!timer) timer = setInterval(() => { if (document.visibilityState === 'visible') loadGallery(); }, 15000); }
+    function stopLoop(){ if (timer) { clearInterval(timer); timer = null; } }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') startLoop(); else stopLoop();
+    });
+
+    loadGallery();
+    startLoop();
+  </script>
 </body>
 </html>
 
