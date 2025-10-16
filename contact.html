@@ -1,60 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — Off The Ladder Construction</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Request a Quote — OTL Construction</title>
+  <meta name="description" content="Request a quote for concrete pads, remodels, and outdoor spaces in DFW.">
+  <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body>
-  <!-- Sticky purple header -->
-  <header class="site-header">
-    <div class="topbar">
-      <a class="brand" href="/index.html">Off The Ladder Construction</a>
-      <nav class="main-nav">
-        <a href="/index.html" class="nav-link">Story</a>
-        <a href="/gallery.html" class="nav-link">Gallery</a>
-        <a href="/contact.html" class="nav-link active">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <main class="container">
-    <h1>Get a quote</h1>
-    <p>Tell us a bit about your project and we’ll get right back to you.</p>
+<header class="site-header">
+  <div class="wrap row">
+    <a class="logo" href="/">OTL</a>
+    <nav class="desktop">
+      <a href="/#services">Services</a>
+      <a href="/gallery.html">Gallery</a>
+      <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
+    </nav>
+    <div class="nav-actions"><button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button></div>
+  </div>
+  <div class="mobile-menu">
+    <a href="/#services">Services</a>
+    <a href="/gallery.html">Gallery</a>
+    <a href="/contact.html" class="btn btn--secondary cta">Request a Quote</a>
+  </div>
+</header>
 
-    <!-- Static form with no submission backend -->
-    <form onsubmit="return openEmail()" id="contactForm">
-      <label>Name<br><input type="text" id="name" required></label><br>
-      <label>Email<br><input type="email" id="email" required></label><br>
-      <label>Phone<br><input type="tel" id="phone"></label><br>
-      <label>Project details<br><textarea id="details" rows="6" required></textarea></label><br>
-      <button class="btn" type="submit">Send Email</button>
+<main class="section">
+  <div class="wrap">
+    <h1 class="mt-0">Request a Quote</h1>
+    <p class="sub">Tell us what you need. We’ll reply within one business day.</p>
+
+    <form class="form" id="quoteForm" action="mailto:Dave@otldfw.com" method="post" enctype="text/plain">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="Name" type="text" required placeholder="Jane Doe">
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="Email" type="email" required placeholder="jane@example.com">
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" name="Phone" type="tel" placeholder="(###) ###-####">
+      </div>
+
+      <div class="field">
+        <label for="service">Service type</label>
+        <select id="service" name="Service">
+          <option>Concrete pad</option>
+          <option>Interior remodel</option>
+          <option>Outdoor space</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Project details</label>
+        <textarea id="message" name="Message" rows="5" required placeholder="Size, location, timeline, anything we should know…"></textarea>
+        <div class="helper">By submitting, you agree we may email or call you about this request.</div>
+      </div>
+
+      <button class="btn btn--primary" type="submit">Send Request</button>
+      <a class="btn btn--secondary" href="mailto:Dave@otldfw.com?subject=Quote%20Request">Or email us directly</a>
     </form>
+  </div>
+</main>
 
-    <p style="margin-top:1rem;">
-      Prefer direct email? <a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a>
-    </p>
-  </main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>OTL Construction</h4>
+        <p><a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a></p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <p><a href="/">Home</a><br><a href="/gallery.html">Gallery</a></p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <p>Mon–Fri 8:00–5:00</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="y"></span> OTL Construction.</div>
+  </div>
+</footer>
 
-  <footer>© 2025 Off The Ladder Construction. All rights reserved.</footer>
+<script src="/js/site.js"></script>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
 
-  <script>
-    // Builds a mailto link dynamically and opens it in the user's email app
-    function openEmail() {
-      const name = encodeURIComponent(document.getElementById('name').value);
-      const email = encodeURIComponent(document.getElementById('email').value);
-      const phone = encodeURIComponent(document.getElementById('phone').value);
-      const details = encodeURIComponent(document.getElementById('details').value);
+  // Light client-side validation + mailto fallback notice
+  const form = document.getElementById('quoteForm');
+  form.addEventListener('submit', (e) => {
+    // If any required is missing, let browser show native errors
+    const ok = form.checkValidity();
+    if (!ok) return;
 
-      const subject = `Quote request from ${name}`;
-      const body = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0A%0AProject Details:%0A${details}`;
-      const mailtoLink = `mailto:Dave@otldfw.com?subject=${subject}&body=${body}`;
-
-      window.location.href = mailtoLink;
-      return false; // prevent form submission/refresh
-    }
-  </script>
+    // Mailto opens the user’s email client; show a quick heads-up
+    alert("Your email app will open to send this request to Dave@otldfw.com.\nIf it doesn't, click the direct email button.");
+  });
+</script>
 </body>
 </html>
 
