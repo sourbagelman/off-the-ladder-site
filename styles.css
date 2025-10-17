@@ -191,3 +191,6 @@ body.otl{
   .otl .row{grid-template-columns:1fr}
 }
 /* ======================================================== */
+/* gallery tile display */
+.otl .tile { display:block; }
+.otl .tile img { display:block; width:100%; border-radius:14px; }
