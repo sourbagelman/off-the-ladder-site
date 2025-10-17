@@ -6,7 +6,7 @@
   <title>Project Gallery – Off The Ladder</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ===== minimal page-local styles so layout can't break ===== */
+    /* minimal page-local gallery layout only */
     .otl .container{max-width:1120px;margin:0 auto;padding:24px 20px}
     .otl .card{background:#fff;border:1px solid #ececec;border-radius:16px;box-shadow:0 6px 22px rgba(18,18,18,.08);padding:22px;margin:18px 0}
     .otl .grid{display:grid;gap:16px}
@@ -14,15 +14,6 @@
     .otl .tile{display:block;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06);transition:transform .18s ease, box-shadow .18s ease;aspect-ratio:4/3}
     .otl .tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.10)}
     .otl .tile img{display:block;width:100%;height:100%;object-fit:cover}
-
-    /* header bits to match other pages even if globals change */
-    .site-header{background:linear-gradient(180deg,#5a2ea6,#4b2391);color:#fff}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 20px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800}
-    .brand img{width:34px;height:34px;border-radius:8px;object-fit:cover}
-    .nav-links{display:flex;gap:16px}
-    .nav-links a{color:#fff;text-decoration:none;opacity:.95}
-    .nav-links a:hover{opacity:1;text-decoration:underline}
   </style>
 </head>
 <body class="otl">
@@ -45,7 +36,6 @@
       <h1>Gallery</h1>
       <p class="muted">Recent projects and in-progress work.</p>
       <div id="gallery" class="grid auto"></div>
-      <p id="debug" class="muted" style="margin-top:10px"></p>
     </section>
   </main>
 
@@ -53,45 +43,36 @@
     const cloud = "dttivrbf0";
     const tag = "otl-gallery";
     const wrap = document.getElementById("gallery");
-    const debug = document.getElementById("debug");
 
-    // Prefer provided URLs; otherwise build from public_id/format/version
     function buildThumbUrl(r) {
       const provided = r.secure_url || r.url;
       if (provided) {
-        // add lightweight transform on provided url if possible
-        try {
-          const parts = provided.split("/upload/");
-          if (parts.length === 2) return parts[0] + "/upload/c_fill,w_800,h_600,f_auto,q_auto/" + parts[1];
-          return provided;
-        } catch { return provided; }
+        const parts = provided.split("/upload/");
+        if (parts.length === 2) return parts[0] + "/upload/c_fill,w_800,h_600,f_auto,q_auto/" + parts[1];
+        return provided;
       }
       const v = r.version ? `v${r.version}/` : "";
       const fmt = r.format ? `.${r.format}` : "";
       return `https://res.cloudinary.com/${cloud}/image/upload/c_fill,w_800,h_600,f_auto,q_auto/${v}${r.public_id}${fmt}`;
     }
 
+    function isProbablyLogo(r) {
+      const id = (r.public_id || "").toLowerCase();
+      return id.includes("logo") || id.includes("otl-logo");
+    }
+
     const listUrl = `https://res.cloudinary.com/${cloud}/image/list/${tag}.json?v=${Date.now()}`;
 
     fetch(listUrl, { cache: "no-store" })
-      .then(r => {
-        debug.textContent = `List status: ${r.status}`;
-        if (!r.ok) throw new Error(`List request failed: ${r.status}`);
-        return r.json();
-      })
+      .then(r => { if (!r.ok) throw new Error(`List request failed: ${r.status}`); return r.json(); })
       .then(({ resources = [] }) => {
-        console.log("List resources:", resources);
-        debug.textContent += ` | items: ${resources.length}`;
-
-        if (!resources.length) {
+        const show = resources.filter(r => !isProbablyLogo(r));
+        if (!show.length) {
           wrap.innerHTML = "<p class='muted'>No images found yet. Check the ‘otl-gallery’ tag in Cloudinary.</p>";
           return;
         }
-
-        // DO NOT filter anything for now; show all to verify
-        resources.forEach(r => {
+        show.forEach(r => {
           const src = buildThumbUrl(r);
-
           const a = document.createElement('a');
           a.href = src;
           a.target = "_blank";
@@ -109,11 +90,11 @@
       .catch(err => {
         console.error("Cloudinary list error:", err);
         wrap.innerHTML = "<p class='muted'>Couldn’t load gallery. Ensure assets are public (delivery=upload) and tagged ‘otl-gallery’.</p>";
-        debug.textContent = String(err);
       });
   </script>
 </body>
 </html>
+
 
 
 
