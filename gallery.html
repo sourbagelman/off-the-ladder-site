@@ -6,21 +6,9 @@
   <title>Project Gallery – Off The Ladder</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-/* ==== OTL polish (namespaced) (subset needed for gallery) ==== */
-body.otl{--purple:#5a2ea6;--purple-700:#4b2391;--ink:#1f1f1f;--muted:#6d6d6d;--paper:#fff;--bg:#f6f6fb;--radius:16px;--shadow:0 6px 22px rgba(18,18,18,.08);color:var(--ink);background:var(--bg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;letter-spacing:.2px}
-.otl .container{max-width:1120px;margin-inline:auto;padding:28px 20px}
-.otl .site-header{position:sticky;top:0;z-index:1000;background:linear-gradient(180deg,var(--purple),var(--purple-700));color:#fff;box-shadow:var(--shadow)}
-.otl .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 20px}
-.otl .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:.3px}
-.otl .brand img{width:34px;height:34px;border-radius:8px;object-fit:cover}
-.otl .nav-links{display:flex;gap:18px;align-items:center}
-.otl .nav-links a{padding:8px 10px;border-radius:10px;opacity:.95;color:#fff;text-decoration:none}
-.otl .nav-links a:hover{opacity:1;background:rgba(255,255,255,.12)}
-.otl .card{background:var(--paper);border:1px solid #ececec;border-radius:16px;box-shadow:var(--shadow);padding:22px;margin:18px 0}
-.otl .grid{display:grid;gap:16px}
-.otl .grid.auto{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.otl .tile{overflow:hidden;border-radius:14px;border:1px solid #eee;background:#fff;transition:transform .18s ease,box-shadow .18s ease}
-.otl .tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.10)}
+    /* minimal additions for gallery tiles */
+    .otl .tile { display:block; }
+    .otl .tile img { display:block; width:100%; border-radius:14px; }
   </style>
 </head>
 <body class="otl">
@@ -47,27 +35,51 @@ body.otl{--purple:#5a2ea6;--purple-700:#4b2391;--ink:#1f1f1f;--muted:#6d6d6d;--p
   </main>
 
   <script>
-    const cloud = "dttivrbf0";    // your Cloudinary cloud
-    const tag = "otl-gallery";    // your tag
+    const cloud = "dttivrbf0";
+    const tag = "otl-gallery";
     const wrap = document.getElementById("gallery");
 
-    fetch(`https://res.cloudinary.com/${cloud}/image/list/${tag}.json`)
-      .then(r => r.json())
+    // Build a full delivery URL from Cloudinary list JSON
+    function buildUrl(r) {
+      const v = r.version ? `v${r.version}/` : "";
+      const fmt = r.format ? `.${r.format}` : "";
+      // Use lightweight transforms for speed/quality
+      return `https://res.cloudinary.com/${cloud}/image/upload/f_auto,q_auto/${v}${r.public_id}${fmt}`;
+    }
+
+    const listUrl = `https://res.cloudinary.com/${cloud}/image/list/${tag}.json?v=${Date.now()}`;
+
+    fetch(listUrl, { cache: "no-store" })
+      .then(r => {
+        if (!r.ok) throw new Error(`List request failed: ${r.status}`);
+        return r.json();
+      })
       .then(({ resources = [] }) => {
         if (!resources.length) {
-          wrap.innerHTML = "<p class='muted'>Gallery will populate as photos are uploaded.</p>";
+          wrap.innerHTML = "<p class='muted'>No images found yet. Check the ‘otl-gallery’ tag in Cloudinary.</p>";
           return;
         }
         resources.forEach(r => {
+          const src = buildUrl(r);
           const a = document.createElement('a');
-          a.href = r.secure_url || r.url; a.target = "_blank"; a.className = "tile";
+          a.href = src;
+          a.target = "_blank";
+          a.className = "tile";
+
           const img = document.createElement('img');
-          img.src = (r.secure_url || r.url) + "?q_auto,f_auto";
-          img.alt = r.public_id || "project photo"; img.loading = "lazy";
-          a.appendChild(img); wrap.appendChild(a);
+          img.src = src;
+          img.alt = r.public_id || "project photo";
+          img.loading = "lazy";
+
+          a.appendChild(img);
+          wrap.appendChild(a);
         });
       })
-      .catch(()=>{ wrap.innerHTML = "<p class='muted'>Gallery will populate as photos are uploaded.</p>"; });
+      .catch(err => {
+        console.error("Cloudinary list error:", err);
+        wrap.innerHTML = "<p class='muted'>Couldn’t load gallery. Ensure assets are public (delivery=upload) and tagged ‘otl-gallery’.</p>";
+      });
   </script>
 </body>
 </html>
+
