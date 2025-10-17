@@ -146,3 +146,51 @@ body.otl{
 /* Extra: gallery tile display for safety */
 .otl .tile{display:block}
 .otl .tile img{display:block;width:100%;border-radius:14px}
+
+/* === OTL unified header (final) === */
+.site-header{
+  position: sticky; top: 0; z-index: 1000;
+  background: linear-gradient(180deg, #5a2ea6, #4b2391);
+  color: #fff; box-shadow: 0 6px 22px rgba(18,18,18,.08);
+}
+
+.nav{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Brand (logo + name) */
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.brand img{
+  width: 34px; height: 34px;
+  border-radius: 8px; object-fit: cover;
+}
+
+/* Right-side nav links */
+.nav-links{
+  display: flex; align-items: center; gap: 18px;
+}
+.nav-links a{
+  color: #e9dcff; text-decoration: none;
+  padding: 8px 10px; border-radius: 10px;
+  opacity: .95;
+}
+.nav-links a:hover{
+  opacity: 1; background: rgba(255,255,255,.12);
+}
+
+/* Kill any legacy header styles that fight these */
+.topbar, .main-nav, .nav-link { all: unset; display: revert; }
