@@ -1,161 +1,129 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OTL Construction — Concrete • Remodels • Outdoor</title>
-  <meta name="description" content="Reliable residential and light commercial construction. Concrete pads, remodels, outdoor spaces and more.">
-  <link rel="stylesheet" href="/css/site.css" />
-</head>
-  <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"LocalBusiness",
-  "name":"Off The Ladder Construction",
-  "image":"https://otldfw.com/og.jpg",
-  "email":"Dave@otldfw.com",
-  "areaServed":"Dallas–Fort Worth, TX",
-  "url":"https://otldfw.com/",
-  "telephone":"+1-XXX-XXX-XXXX",
-  "priceRange":"$$",
-  "address":{"@type":"PostalAddress","addressLocality":"Fort Worth","addressRegion":"TX","addressCountry":"US"},
-  "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"17:00"}],
-  "sameAs":[]
+  <title>Off The Ladder Construction</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Off The Ladder Construction — Quality remodels, clean finishes, zero drama. Fort Worth, TX." />
+  <meta property="og:title" content="Off The Ladder Construction" />
+  <meta property="og:description" content="Say hey to David Cullen — Fort Worth born, TCU bred, and construction-obsessed. If Dave’s on the job, it’s getting DONE." />
+  <meta property="og:image" content="images/otl-logo.jpg" />
+  <link rel="icon" href="favicon.ico" />
+  <style>
+/* ==== OTL polish (namespaced) =========================== */
+body.otl{
+  --purple:#5a2ea6; --purple-700:#4b2391;
+  --ink:#1f1f1f; --muted:#6d6d6d; --paper:#fff; --bg:#f6f6fb;
+  --radius:16px; --shadow:0 6px 22px rgba(18,18,18,.08);
+  color:var(--ink); background:var(--bg);
+  font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  letter-spacing:.2px;
 }
-</script>
+.otl .container{max-width:1120px;margin-inline:auto;padding:28px 20px}
+.otl img{max-width:100%;display:block}
 
-  <meta name="description" content="Residential & light commercial construction in DFW: concrete pads, interior remodels, outdoor spaces. On schedule, done right.">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="Off The Ladder Construction">
-<meta property="og:description" content="Concrete pads, remodels, and outdoor spaces across DFW.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://otldfw.com/og.jpg">
-<meta name="theme-color" content="#5a2ea6">
+/* Header */
+.otl .site-header{
+  position:sticky; top:0; z-index:1000;
+  background:linear-gradient(180deg,var(--purple),var(--purple-700));
+  color:#fff; box-shadow:0 6px 22px rgba(18,18,18,.08);
+}
+.otl .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 20px}
+.otl .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:.3px}
+.otl .brand img{width:34px;height:34px;border-radius:8px;object-fit:cover}
+.otl .nav-links{display:flex;gap:18px;align-items:center}
+.otl .nav-links a{padding:8px 10px;border-radius:10px;opacity:.95;color:#fff;text-decoration:none}
+.otl .nav-links a:hover{opacity:1;background:rgba(255,255,255,.12)}
 
-<body>
+/* Sections / cards */
+.otl .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
+.otl .panel{
+  background:var(--paper); border:1px solid #ececec; border-radius:16px; box-shadow:0 6px 22px rgba(18,18,18,.08);
+  padding:24px;
+}
+.otl h1{font-size:clamp(26px,4.2vw,38px);line-height:1.15;margin:0 0 10px}
+.otl h2{font-size:clamp(20px,3vw,26px);margin:0 0 8px}
+.otl .muted{color:var(--muted)}
+.otl .card{
+  background:var(--paper);border:1px solid #ececec;border-radius:16px;box-shadow:0 6px 22px rgba(18,18,18,.08);
+  padding:22px;margin:18px 0;
+}
 
-<header class="site-header">
-  <div class="wrap row">
-    <a class="logo" href="/">OTL</a>
+/* Grid helpers */
+.otl .grid{display:grid;gap:16px}
+.otl .grid.auto{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 
-    <nav class="desktop">
-      <a href="/#services">Services</a>
-      <a href="/gallery.html">Gallery</a>
-      <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
+/* Buttons */
+.otl .btn{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:#fff;border-radius:12px;
+  padding:12px 16px;border:0;cursor:pointer;font-weight:700}
+.otl .btn:hover{filter:brightness(1.06)}
+.otl .btn.light{background:#fff;color:var(--purple);border:1.5px solid #ddd}
+
+/* Forms */
+.otl input,.otl textarea,.otl select,.otl button{font:inherit}
+.otl input,.otl textarea,.otl select{
+  width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:12px;background:#fff;
+  transition:border-color .15s, box-shadow .15s;
+}
+.otl input:focus,.otl textarea:focus,.otl select:focus{border-color:var(--purple); box-shadow:0 0 0 3px rgba(90,46,166,.16)}
+.otl .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:860px){.otl .hero{grid-template-columns:1fr}.otl .row{grid-template-columns:1fr}}
+
+/* Gallery tiles */
+.otl .tile{
+  overflow:hidden;border-radius:14px;border:1px solid #eee;background:#fff;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.otl .tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.10)}
+/* ======================================================== */
+</style>
+</head>
+<body class="otl">
+  <header class="site-header">
+    <nav class="nav container" style="padding-inline:0">
+      <div class="brand">
+        <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo" />
+        Off The Ladder
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </nav>
+  </header>
 
-    <div class="nav-actions">
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
-    </div>
-  </div>
-  <div class="mobile-menu">
-    <a href="/#services">Services</a>
-    <a href="/gallery.html">Gallery</a>
-    <a href="/contact.html" class="btn btn--secondary cta">Request a Quote</a>
-  </div>
-</header>
-
-<main>
-  <!-- Hero -->
-  <section class="hero">
-    <div class="wrap">
-      <h1>Quality craftsmanship. Clear communication. Zero drama.</h1>
-      <p>We build the stuff you actually need—concrete pads, remodels, and outdoor upgrades—done on schedule and done right.</p>
-      <div class="actions">
-        <a href="/contact.html" class="btn btn--primary">Request a Quote</a>
-        <a href="/gallery.html" class="btn btn--secondary">View Projects</a>
+  <main class="container">
+    <section class="hero">
+      <div class="panel">
+        <h1>Say hey to David Cullen — Fort Worth born, TCU bred, and construction-obsessed.</h1>
+        <p class="muted">
+          With 10+ years of experience, Dave isn’t your average contractor — he’s the dude who turns remodels into full-on transformations.
+          If Dave’s on the job, it’s getting DONE. 💪
+        </p>
+        <ul style="margin:12px 0 0; padding-left:18px;">
+          <li>📍 Based in Fort Worth</li>
+          <li>🛠️ Built on experience</li>
+          <li>💜 Fueled by TCU pride</li>
+        </ul>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <a class="btn" href="contact.html">Get a Quote</a>
+          <a class="btn light" href="gallery.html">See Our Work</a>
+        </div>
       </div>
-    </div>
-  </section>
-<section class="container" aria-label="Trust badges" style="opacity:.9">
-  <div class="info-grid">
-    <div class="info-box" style="display:flex;align-items:center;gap:12px">
-      <img src="/img/badge-insured.svg" alt="" width="40" height="40"><strong>Licensed & Insured</strong>
-    </div>
-    <div class="info-box" style="display:flex;align-items:center;gap:12px">
-      <img src="/img/badge-locally-owned.svg" alt="" width="40" height="40"><strong>Locally Owned</strong>
-    </div>
-    <div class="info-box" style="display:flex;align-items:center;gap:12px">
-      <img src="/img/badge-warranty.svg" alt="" width="40" height="40"><strong>Workmanship Warranty</strong>
-    </div>
-  </div>
-</section>
-
-  <!-- Services -->
-  <section id="services" class="section">
-    <div class="wrap">
-      <h2>Services</h2>
-      <p class="sub">Plain-speak scopes with predictable timelines. Here are our most requested:</p>
-
-      <div class="grid">
-        <article class="card">
-          <img src="/img/service-concrete.jpg" alt="Freshly finished concrete pad">
-          <div class="body">
-            <h3>Concrete Pads</h3>
-            <p>Precision-formed pads for sheds, patios, and equipment. Expansion joints and proper drainage included.</p>
-            <a class="card-link" href="/contact.html">Learn more →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="/img/service-remodel.jpg" alt="Kitchen remodel with new cabinets">
-          <div class="body">
-            <h3>Interior Remodels</h3>
-            <p>Kitchens, baths, and full refreshes. Clean site practices and tight punch lists.</p>
-            <a class="card-link" href="/contact.html">Learn more →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="/img/service-outdoor.jpg" alt="Covered outdoor patio space">
-          <div class="body">
-            <h3>Outdoor Spaces</h3>
-            <p>Patios, pergolas, small additions. Built for Texas weather and weekend living.</p>
-            <a class="card-link" href="/contact.html">Learn more →</a>
-          </div>
-        </article>
+      <div class="panel" style="display:flex;align-items:center;justify-content:center">
+        <img src="images/otl-logo.jpg" alt="Off The Ladder logo" style="max-width:380px;width:100%;border-radius:12px" />
       </div>
-    </div>
-  </section>
-</main>
-<section class="container" aria-labelledby="t-head">
-  <h2 id="t-head" class="mt-0">What clients say</h2>
-  <div class="info-grid">
-    <blockquote class="info-box"><p>“On time, clean work, and zero surprises on price.”</p><footer>— C. Ramirez</footer></blockquote>
-    <blockquote class="info-box"><p>“Our patio cover looks factory—neighbors keep asking who did it.”</p><footer>— D. Nguyen</footer></blockquote>
-    <blockquote class="info-box"><p>“Great communication, they handled permits and inspections smoothly.”</p><footer>— M. Ellis</footer></blockquote>
-  </div>
-</section>
+    </section>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <h4>OTL Construction</h4>
-        <p>Serving DFW and surrounding areas.</p>
-        <p><a href="mailto:Dave@otldfw.com">Dave@otldfw.com</a> • (XXX) XXX-XXXX</p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <p><a href="/#services">Services</a><br>
-           <a href="/gallery.html">Gallery</a><br>
-           <a href="/contact.html">Request a Quote</a></p>
-      </div>
-      <div>
-        <h4>Hours</h4>
-        <p>Mon–Fri 8:00–5:00<br>Sat by appointment</p>
-      </div>
-    </div>
-    <div class="footer-bottom">© <span id="y"></span> OTL Construction. All rights reserved.</div>
-  </div>
-</footer>
-
-<script src="/js/site.js"></script>
-<script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+    <section class="card">
+      <h2>Why Off The Ladder?</h2>
+      <p>
+        Brains, brawn, and a builder’s instinct you can’t teach. One word: Dave.
+        Follow for project peeks, progress shots, and the power-tool moments you didn’t know you needed. ⚙️✨
+      </p>
+    </section>
+  </main>
 </body>
 </html>
-
-
-

@@ -3,155 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recent Work — Off The Ladder Construction</title>
-  <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Project photos from recent Off The Ladder Construction jobs.">
+  <title>Project Gallery – Off The Ladder</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+/* ==== OTL polish (namespaced) =========================== */
+body.otl{
+  --purple:#5a2ea6; --purple-700:#4b2391;
+  --ink:#1f1f1f; --muted:#6d6d6d; --paper:#fff; --bg:#f6f6fb;
+  --radius:16px; --shadow:0 6px 22px rgba(18,18,18,.08);
+  color:var(--ink); background:var(--bg);
+  font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  letter-spacing:.2px;
+}
+.otl .container{max-width:1120px;margin-inline:auto;padding:28px 20px}
+.otl img{max-width:100%;display:block}
+
+/* Header */
+.otl .site-header{
+  position:sticky; top:0; z-index:1000;
+  background:linear-gradient(180deg,var(--purple),var(--purple-700));
+  color:#fff; box-shadow:0 6px 22px rgba(18,18,18,.08);
+}
+.otl .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 20px}
+.otl .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:.3px}
+.otl .brand img{width:34px;height:34px;border-radius:8px;object-fit:cover}
+.otl .nav-links{display:flex;gap:18px;align-items:center}
+.otl .nav-links a{padding:8px 10px;border-radius:10px;opacity:.95;color:#fff;text-decoration:none}
+.otl .nav-links a:hover{opacity:1;background:rgba(255,255,255,.12)}
+
+/* Sections / cards */
+.otl .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
+.otl .panel{
+  background:var(--paper); border:1px solid #ececec; border-radius:16px; box-shadow:0 6px 22px rgba(18,18,18,.08);
+  padding:24px;
+}
+.otl h1{font-size:clamp(26px,4.2vw,38px);line-height:1.15;margin:0 0 10px}
+.otl h2{font-size:clamp(20px,3vw,26px);margin:0 0 8px}
+.otl .muted{color:var(--muted)}
+.otl .card{
+  background:var(--paper);border:1px solid #ececec;border-radius:16px;box-shadow:0 6px 22px rgba(18,18,18,.08);
+  padding:22px;margin:18px 0;
+}
+
+/* Grid helpers */
+.otl .grid{display:grid;gap:16px}
+.otl .grid.auto{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+
+/* Buttons */
+.otl .btn{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:#fff;border-radius:12px;
+  padding:12px 16px;border:0;cursor:pointer;font-weight:700}
+.otl .btn:hover{filter:brightness(1.06)}
+.otl .btn.light{background:#fff;color:var(--purple);border:1.5px solid #ddd}
+
+/* Forms */
+.otl input,.otl textarea,.otl select,.otl button{font:inherit}
+.otl input,.otl textarea,.otl select{
+  width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:12px;background:#fff;
+  transition:border-color .15s, box-shadow .15s;
+}
+.otl input:focus,.otl textarea:focus,.otl select:focus{border-color:var(--purple); box-shadow:0 0 0 3px rgba(90,46,166,.16)}
+.otl .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:860px){.otl .hero{grid-template-columns:1fr}.otl .row{grid-template-columns:1fr}}
+
+/* Gallery tiles */
+.otl .tile{
+  overflow:hidden;border-radius:14px;border:1px solid #eee;background:#fff;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.otl .tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.10)}
+/* ======================================================== */
+</style>
 </head>
-  <meta name="description" content="Residential & light commercial construction in DFW: concrete pads, interior remodels, outdoor spaces. On schedule, done right.">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta property="og:title" content="Off The Ladder Construction">
-<meta property="og:description" content="Concrete pads, remodels, and outdoor spaces across DFW.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://otldfw.com/og.jpg">
-<meta name="theme-color" content="#5a2ea6">
-
-  <div class="lb-backdrop" id="lb">
-  <button class="lb-close" aria-label="Close">×</button>
-  <img class="lb-img" alt="">
-</div>
-<script>
-  (function(){
-    const lb = document.getElementById('lb');
-    const lbImg = lb.querySelector('.lb-img');
-    const close = lb.querySelector('.lb-close');
-    document.getElementById('gallery').addEventListener('click', (e)=>{
-      const a = e.target.closest('a'); if(!a) return;
-      e.preventDefault();
-      lbImg.src = a.href; lb.classList.add('open');
-    });
-    function hide(){ lb.classList.remove('open'); lbImg.src=''; }
-    close.addEventListener('click', hide);
-    lb.addEventListener('click', (e)=>{ if(e.target===lb) hide(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hide(); });
-  })();
-</script>
-
-<body>
+<body class="otl">
   <header class="site-header">
-    <div class="topbar">
-      <a class="brand" href="/index.html">Off The Ladder Construction</a>
-      <nav class="main-nav">
-        <a href="/index.html" class="nav-link">Story</a>
-        <a href="/gallery.html" class="nav-link active">Gallery</a>
-        <a href="/contact.html" class="nav-link">Contact</a>
-      </nav>
-    </div>
+    <nav class="nav container" style="padding-inline:0">
+      <div class="brand">
+        <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo" />
+        Off The Ladder
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
   </header>
 
   <main class="container">
-    <h1 class="mt-0">Recent Work</h1>
-    <p class="sub">A live feed of our latest projects. New uploads appear automatically.</p>
+    <section class="card">
+      <h1>Gallery</h1>
+      <p class="muted">Recent projects and in-progress work.</p>
+      <div id="gallery" class="grid auto"></div>
+    </section>
 
-    <section id="gallery" class="gallery-grid" aria-live="polite">Loading gallery...</section>
-    <noscript><p>Please enable JavaScript to view the live gallery.</p></noscript>
+    <section class="card">
+      <h2>Add new photos</h2>
+      <p class="muted">Use the private uploader page.</p>
+      <p><a class="btn" href="upload.html">Open uploader</a></p>
+    </section>
   </main>
 
-  <footer>© <span id="y"></span> Off The Ladder Construction. All rights reserved.</footer>
-
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
+    const cloud = "dttivrbf0";    // your Cloudinary cloud
+    const tag = "otl-gallery";    // your tag
+    const wrap = document.getElementById("gallery");
 
-    const ENDPOINT = "https://otl-gallery-fetcher.lance-c84.workers.dev/";
-    const WRAP = document.getElementById("gallery");
-
-    function cldThumb(publicId, format, w, h) {
-      // responsive thumbnail with consistent aspect & smart crop
-      return `https://res.cloudinary.com/dttivrbf0/image/upload/c_fill,g_auto,f_auto,q_auto,w_${w},h_${h}/${publicId}.${format}`;
-    }
-    function cldFull(publicId, format) {
-      // full image link (let Cloudinary pick best format/quality)
-      return `https://res.cloudinary.com/dttivrbf0/image/upload/f_auto,q_auto/${publicId}.${format}`;
-    }
-
-    function figureTemplate(r) {
-      const display = r.display_name || "Gallery image";
-      const alt = display.replace(/[_-]+/g,' ').trim();
-
-      // build elements
-      const fig = document.createElement("figure");
-      fig.className = "gallery-item";
-
-      const a = document.createElement("a");
-      a.href = cldFull(r.public_id, r.format);
-      a.target = "_blank";
-      a.rel = "noopener";
-
-      const img = document.createElement("img");
-      // responsive sources
-      img.src = cldThumb(r.public_id, r.format, 480, 360);
-      img.srcset = [
-        cldThumb(r.public_id, r.format, 480, 360) + " 480w",
-        cldThumb(r.public_id, r.format, 768, 560) + " 768w",
-        cldThumb(r.public_id, r.format, 1200, 867) + " 1200w",
-        cldThumb(r.public_id, r.format, 1600, 1156) + " 1600w"
-      ].join(", ");
-      img.sizes = "(max-width: 560px) 100vw, (max-width: 900px) 50vw, 33vw";
-      img.alt = alt;
-      img.loading = "lazy";
-      img.decoding = "async";
-      img.fetchPriority = "low";
-
-      const cap = document.createElement("figcaption");
-      cap.className = "gallery-caption";
-      cap.textContent = alt;
-
-      a.appendChild(img);
-      fig.appendChild(a);
-      fig.appendChild(cap);
-      return fig;
-    }
-
-    async function loadGallery() {
-      try {
-        const res = await fetch(ENDPOINT, { cache: 'no-store' });
-        if (!res.ok) throw new Error("Bad status " + res.status);
-        const data = await res.json();
-
-        WRAP.innerHTML = "";
-        const items = (data.resources || []).filter(Boolean);
-
-        if (!items.length) {
-          WRAP.innerHTML = "<p>No images found yet. Upload some to get started!</p>";
+    fetch(`https://res.cloudinary.com/${cloud}/image/list/${tag}.json`)
+      .then(r => r.json())
+      .then(({ resources = [] }) => {
+        if (!resources.length) {
+          wrap.innerHTML = "<p class='muted'>Gallery will populate as photos are uploaded.</p>";
           return;
         }
-
-        items.forEach(r => WRAP.appendChild(figureTemplate(r)));
-      } catch (e) {
-        WRAP.innerHTML = "<p>Unable to load the gallery right now. Please try again later.</p>";
-        console.error(e);
-      }
-    }
-
-    // refresh every 15s while tab is visible
-    let timer = null;
-    function startLoop(){ if (!timer) timer = setInterval(() => { if (document.visibilityState === 'visible') loadGallery(); }, 15000); }
-    function stopLoop(){ if (timer) { clearInterval(timer); timer = null; } }
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') startLoop(); else stopLoop();
-    });
-
-    loadGallery();
-    startLoop();
+        resources.forEach(r => {
+          const a = document.createElement('a');
+          a.href = r.secure_url || r.url; a.target = "_blank"; a.className = "tile";
+          const img = document.createElement('img');
+          img.src = (r.secure_url || r.url) + "?q_auto,f_auto";
+          img.alt = r.public_id || "project photo"; img.loading = "lazy";
+          a.appendChild(img); wrap.appendChild(a);
+        });
+      })
+      .catch(()=>{ wrap.innerHTML = "<p class='muted'>Gallery will populate as photos are uploaded.</p>"; });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
