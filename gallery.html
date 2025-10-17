@@ -6,9 +6,16 @@
   <title>Project Gallery – Off The Ladder</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* minimal additions for gallery tiles */
-    .otl .tile { display:block; }
-    .otl .tile img { display:block; width:100%; border-radius:14px; }
+    /* --- minimal page-local styles so layout can't "break" --- */
+    .otl .container{max-width:1120px;margin:0 auto;padding:24px 20px}
+    .otl .card{background:#fff;border:1px solid #ececec;border-radius:16px;box-shadow:0 6px 22px rgba(18,18,18,.08);padding:22px;margin:18px 0}
+    .otl .grid{display:grid;gap:16px}
+    .otl .grid.auto{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+    .otl .tile{display:block;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06);transition:transform .18s ease, box-shadow .18s ease;
+               /* keep consistent size with cropping */
+               aspect-ratio: 4 / 3;}
+    .otl .tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.10)}
+    .otl .tile img{display:block;width:100%;height:100%;object-fit:cover}
   </style>
 </head>
 <body class="otl">
@@ -39,12 +46,18 @@
     const tag = "otl-gallery";
     const wrap = document.getElementById("gallery");
 
-    // Build a full delivery URL from Cloudinary list JSON
-    function buildUrl(r) {
+    // Build a moderately sized thumbnail URL (cropped to fit the tile)
+    function buildThumbUrl(r) {
       const v = r.version ? `v${r.version}/` : "";
       const fmt = r.format ? `.${r.format}` : "";
-      // Use lightweight transforms for speed/quality
-      return `https://res.cloudinary.com/${cloud}/image/upload/f_auto,q_auto/${v}${r.public_id}${fmt}`;
+      // c_fill crops to box, w/h control size; f_auto/q_auto keep it efficient
+      return `https://res.cloudinary.com/${cloud}/image/upload/c_fill,w_800,h_600,f_auto,q_auto/${v}${r.public_id}${fmt}`;
+    }
+
+    // Skip anything that looks like the logo if it was tagged by accident
+    function isProbablyLogo(r) {
+      const id = (r.public_id || "").toLowerCase();
+      return id.includes("logo") || id.endsWith("/otl-logo");
     }
 
     const listUrl = `https://res.cloudinary.com/${cloud}/image/list/${tag}.json?v=${Date.now()}`;
@@ -55,12 +68,13 @@
         return r.json();
       })
       .then(({ resources = [] }) => {
-        if (!resources.length) {
+        const show = resources.filter(r => !isProbablyLogo(r));
+        if (!show.length) {
           wrap.innerHTML = "<p class='muted'>No images found yet. Check the ‘otl-gallery’ tag in Cloudinary.</p>";
           return;
         }
-        resources.forEach(r => {
-          const src = buildUrl(r);
+        show.forEach(r => {
+          const src = buildThumbUrl(r);
           const a = document.createElement('a');
           a.href = src;
           a.target = "_blank";
@@ -82,4 +96,5 @@
   </script>
 </body>
 </html>
+
 
