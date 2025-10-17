@@ -5,32 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Project Gallery – Off The Ladder</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* --- ensure header matches other pages, even if external CSS is cached --- */
-    .site-header{
-      position:sticky; top:0; z-index:1000;
-      background:linear-gradient(180deg,#5a2ea6,#4b2391);
-      color:#fff; box-shadow:0 6px 22px rgba(18,18,18,.08);
-    }
-    .nav{max-width:1120px;margin:0 auto;padding:14px 20px;
-      display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px;color:#fff;text-decoration:none}
-    .brand img{width:34px;height:34px;border-radius:8px;object-fit:cover}
-    .nav-links{display:flex;gap:18px;align-items:center}
-    .nav-links a{color:#e9dcff;text-decoration:none;padding:8px 10px;border-radius:10px;opacity:.95}
-    .nav-links a:hover{opacity:1;background:rgba(255,255,255,.12)}
-
-    /* --- local gallery layout --- */
-    .otl .container{max-width:1120px;margin:0 auto;padding:24px 20px}
-    .otl .card{background:#fff;border:1px solid #ececec;border-radius:16px;box-shadow:0 6px 22px rgba(18,18,18,.08);padding:22px;margin:18px 0}
-    .otl .grid{display:grid;gap:16px}
-    .otl .grid.auto{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-    .otl .tile{display:block;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06);transition:transform .18s ease, box-shadow .18s ease;aspect-ratio:4/3}
-    .otl .tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.10)}
-    .otl .tile img{display:block;width:100%;height:100%;object-fit:cover}
-  </style>
 </head>
 <body class="otl">
+
   <header class="site-header">
     <nav class="nav">
       <a class="brand" href="index.html">
@@ -58,12 +35,12 @@
     const tag = "otl-gallery";
     const wrap = document.getElementById("gallery");
 
-    // Prefer provided URL; otherwise build one. Always serve a cropped thumbnail.
     function buildThumbUrl(r) {
       const provided = r.secure_url || r.url;
       if (provided) {
         const parts = provided.split("/upload/");
-        if (parts.length === 2) return parts[0] + "/upload/c_fill,w_800,h_600,f_auto,q_auto/" + parts[1];
+        if (parts.length === 2)
+          return parts[0] + "/upload/c_fill,w_800,h_600,f_auto,q_auto/" + parts[1];
         return provided;
       }
       const v = r.version ? `v${r.version}/` : "";
@@ -71,7 +48,6 @@
       return `https://res.cloudinary.com/${cloud}/image/upload/c_fill,w_800,h_600,f_auto,q_auto/${v}${r.public_id}${fmt}`;
     }
 
-    // Hide any accidental logo in the tag
     function isProbablyLogo(r) {
       const id = (r.public_id || "").toLowerCase();
       return id.includes("logo") || id.includes("otl-logo");
@@ -108,6 +84,10 @@
         wrap.innerHTML = "<p class='muted'>Couldn’t load gallery. Ensure assets are public (delivery=upload) and tagged ‘otl-gallery’.</p>";
       });
   </script>
+
+  <footer>
+    <p>© 2025 Off The Ladder Construction — Built in Fort Worth, Texas</p>
+  </footer>
 </body>
 </html>
 
