@@ -6,22 +6,11 @@
   <title>Contact – Off The Ladder Construction</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-  <script>
-  // Simple IntersectionObserver to add .in to .reveal elements
-  (function(){
-    var els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window) || !els.length) return els.forEach(function(e){ e.classList.add('in'); });
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); } });
-    }, { threshold: 0.12 });
-    els.forEach(function(e){ io.observe(e); });
-  })();
-</script>
-
 <body class="otl">
 
+  <!-- Header -->
   <header class="site-header">
-    <nav class="nav">
+    <nav class="nav" role="navigation" aria-label="Main">
       <a class="brand" href="index.html">
         <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo" />
         Off The Ladder
@@ -29,84 +18,112 @@
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="gallery.html">Gallery</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html" aria-current="page" class="active">Contact</a>
       </div>
     </nav>
   </header>
 
- <main>
-  <section class="full-section alt">
-    <div class="container">
-      <div class="card reveal">
-        <h1>Contact</h1>
-        <p class="muted">Tell us about your project and we’ll get back to you quickly.</p>
+  <!-- Main -->
+  <main>
+    <section class="full-section alt">
+      <div class="container">
+        <div class="card reveal">
+          <h1>Contact</h1>
+          <p class="muted">Tell us about your project and we’ll get back to you quickly.</p>
 
-        <form action="https://formspree.io/f/xdknjvze" method="POST" class="contact-form">
-          <div class="row">
-            <div>
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" required />
+          <form action="https://formspree.io/f/xdknjvze" method="POST" class="contact-form">
+            <!-- Honeypot (spam trap) -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <div class="row">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="_replyto" type="email" autocomplete="email" required />
+              </div>
             </div>
-            <div>
-              <label for="email">Email</label>
-              <input type="email" id="email" name="_replyto" required />
-            </div>
-          </div>
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
-          <br />
-          <button class="btn btn-lg" type="submit">Send Message</button>
-        </form>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <br />
+            <button class="btn btn-lg" type="submit">Send Message</button>
+          </form>
+        </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 
-
+  <!-- Footer -->
   <footer class="site-footer site-footer--purple">
-  <div class="footer-wrap">
-    <div class="footer-grid">
-      <!-- LEFT: Contact -->
-      <div class="foot-col foot-left">
-        <a class="brand brand--foot" href="index.html">
-          <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo">
-          Off The Ladder
-        </a>
-        <p class="foot-contact">
-          <strong>David Cullen</strong><br>
-          <a href="tel:+18176027980">817-602-7980</a><br>
-          <a href="mailto:dave@otldfw.com">dave@otldfw.com</a><br>
-          <span>Mon–Fri · 9:00 AM – 4:00 PM</span>
-        </p>
-      </div>
+    <div class="footer-wrap">
+      <div class="footer-grid">
+        <!-- LEFT: Contact -->
+        <div class="foot-col foot-left">
+          <a class="brand brand--foot" href="index.html">
+            <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo">
+            Off The Ladder
+          </a>
+          <p class="foot-contact">
+            <strong>David Cullen</strong><br>
+            <a href="tel:+18176027980">817-602-7980</a><br>
+            <a href="mailto:dave@otldfw.com">dave@otldfw.com</a><br>
+            <span>Mon–Fri · 9:00 AM – 4:00 PM</span>
+          </p>
+        </div>
 
-      <!-- CENTER: Links -->
-      <div class="foot-col foot-center">
-        <ul class="foot-links foot-links--inline">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
+        <!-- CENTER: Links -->
+        <div class="foot-col foot-center">
+          <ul class="foot-links foot-links--inline" role="list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+          </ul>
+        </div>
 
-      <!-- RIGHT: Service Area -->
-      <div class="foot-col foot-right">
-        <h4>Service Area</h4>
-        <p class="muted">Fort Worth + surrounding communities</p>
+        <!-- RIGHT: Service Area -->
+        <div class="foot-col foot-right">
+          <h4>Service Area</h4>
+          <p class="muted">Fort Worth + surrounding communities</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="foot-bottom">
-    <p>© <span id="otlYear"></span> Off The Ladder Construction. All rights reserved.</p>
-  </div>
-</footer>
+    <div class="foot-bottom">
+      <p>© <span id="otlYear"></span> Off The Ladder Construction. All rights reserved.</p>
+    </div>
+  </footer>
 
-<script>
-  (function(){ var y=document.getElementById('otlYear'); if(y) y.textContent=new Date().getFullYear(); })();
-</script>
+  <!-- Scripts at end -->
+  <script>
+    // Reveal-on-scroll
+    (function(){
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || !els.length) {
+        els.forEach(function(e){ e.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function(e){ io.observe(e); });
+    })();
 
-
+    // Footer year
+    (function(){
+      var y = document.getElementById('otlYear');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>
+
 
