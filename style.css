@@ -155,3 +155,27 @@ input:focus,textarea:focus,select:focus{border-color:var(--purple);box-shadow:0 
   .foot-left,.foot-center,.foot-right{text-align:left;justify-self:start}
   .foot-links--inline{gap:14px}
 }
+/* === Hero visibility fix (v2) === */
+.home .hero{
+  /* slightly stronger overlay; remove brightness wash */
+  background:
+    linear-gradient(180deg, rgba(36,17,77,.22), rgba(36,17,77,.16)),
+    url('images/hero-bg.jpg') center/cover no-repeat;
+  filter: none;
+}
+
+.home .hero h1,
+.home .hero .hero__sub{
+  color:#fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+
+/* underline accent should be light on the hero */
+.home .hero h1::after{
+  background: linear-gradient(90deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
+}
+
+/* optional: trim vertical space on smaller screens */
+@media (max-width: 900px){
+  .home .hero{ padding: 110px 16px 90px; }
+}
