@@ -556,3 +556,51 @@ main { flex: 1 0 auto; }
 .contact-form label { display:block; margin-bottom:6px; font-weight:700; }
 .contact-form .row > div { display:flex; flex-direction:column; }
 
+/* ===== Color accents & hero image polish ===== */
+
+/* Slight site-wide backdrop tint (subtle spotlight top-right) */
+body{
+  background:
+    radial-gradient(1200px 600px at 80% -200px, rgba(90,46,166,.08), transparent 60%),
+    #faf9ff;
+}
+
+/* Section bands: give every section a faint wash, and the .alt sections a soft purple bg */
+.full-section{ padding:84px 0; background:linear-gradient(180deg, rgba(90,46,166,.03), rgba(90,46,166,0) 60%) }
+.full-section.alt{ background:#f2efff; }              /* light lavender */
+@media (max-width:860px){ .full-section{ padding:64px 0 } }
+
+/* Card panels: purple-tinted border + shadow */
+.panel, .card{
+  border-color:#e5defa !important;
+  box-shadow:0 6px 22px rgba(90,46,166,.08) !important;
+}
+
+/* Headings: small gradient underline accent */
+h1, h2{ position:relative }
+h1::after, h2::after{
+  content:""; display:block; width:64px; height:4px; border-radius:2px;
+  background:linear-gradient(90deg, #8c6ad5, #5a2ea6);
+  margin:10px 0 6px;
+}
+
+/* Buttons: a touch of lift + brandy outline for .light */
+.btn{ box-shadow:0 6px 16px rgba(90,46,166,.18); transition:transform .12s ease }
+.btn:hover{ transform:translateY(-1px) }
+.btn.light{ border-color:#dcd2ff }
+
+/* HERO: real photo + layered gradients for readable text */
+.hero{
+  position:relative;
+  color:#fff;
+  background:
+    linear-gradient(180deg, rgba(36,17,77,.55), rgba(36,17,77,.35)),             /* top shading */
+    url('images/hero-bg.jpg') center/cover no-repeat,                            /* your image */
+    radial-gradient(1200px 600px at 10% -20%, rgba(255,255,255,.08), transparent 60%); /* subtle texture if no image yet */
+}
+.hero__sub{ color:#f1eaff }
+
+/* Optional: make the hero a bit tighter on very small screens */
+@media (max-width:520px){
+  .hero .btn-lg{ width:100%; justify-content:center }
+}
