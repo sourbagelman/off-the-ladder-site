@@ -45,9 +45,50 @@
     </section>
   </main>
 
-  <footer>
-    <p>© 2025 Off The Ladder Construction — Built in Fort Worth, Texas</p>
-  </footer>
+  <footer class="site-footer site-footer--purple">
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <!-- Brand & contact -->
+      <div class="foot-col">
+        <a class="brand brand--foot" href="index.html">
+          <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo">
+          Off The Ladder
+        </a>
+        <p class="foot-contact">
+          <strong>David Cullen</strong><br>
+          <a href="tel:+18176027980">817-602-7980</a><br>
+          <a href="mailto:dave@otldfw.com">dave@otldfw.com</a><br>
+          <span>Mon–Fri · 9:00 AM – 4:00 PM</span>
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <div class="foot-col">
+        <h4>Links</h4>
+        <ul class="foot-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Placeholder column (swap later if you like) -->
+      <div class="foot-col">
+        <h4>Service Area</h4>
+        <p class="muted">Fort Worth + surrounding communities</p>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <p>© <span id="otlYear"></span> Off The Ladder Construction. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){ var y=document.getElementById('otlYear'); if(y) y.textContent=new Date().getFullYear(); })();
+</script>
+
 
 </body>
 </html>
