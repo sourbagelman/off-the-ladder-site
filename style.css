@@ -361,3 +361,53 @@ body.otl {
   .nav-links{ order: 2; width: 100%; justify-content: flex-end; }
 }
 
+/* ===== Sticky page layout (footer locked to bottom) ===== */
+html, body { height: 100%; }
+body { display: flex; min-height: 100vh; flex-direction: column; }
+main { flex: 1 0 auto; }
+
+/* ===== Footer base (shared) ===== */
+.site-footer{
+  background:#fff;
+  border-top:1px solid #e8e6f3;
+  color:var(--ink);
+}
+.site-footer .footer-wrap{
+  max-width:1120px; margin:0 auto; padding:26px 16px 12px;
+}
+.footer-grid{
+  display:grid; grid-template-columns:1.4fr 1fr 1fr;
+  gap:22px; align-items:start;
+}
+.brand--foot{
+  color:inherit; text-decoration:none; font-weight:800; letter-spacing:.2px;
+  display:flex; align-items:center; gap:10px;
+}
+.brand--foot img{ width:36px; height:36px; border-radius:8px; object-fit:cover }
+.foot-contact{ margin:.6rem 0 0 }
+.foot-col h4{ margin:0 0 .6rem; font-size:1rem; font-weight:800 }
+.foot-links{ list-style:none; margin:0; padding:0 }
+.foot-links li{ margin:.25rem 0 }
+
+/* ===== Purple variant ===== */
+.site-footer--purple{
+  background: linear-gradient(180deg, var(--purple), var(--purple-700));
+  color:#fff; border-top: none;
+}
+.site-footer--purple .brand--foot{ color:#fff }
+.site-footer--purple .foot-contact a{ color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.25) }
+.site-footer--purple .foot-contact a:hover{ border-bottom-color: rgba(255,255,255,.55) }
+.site-footer--purple .foot-links a{ color:#e9dcff; text-decoration:none }
+.site-footer--purple .foot-links a:hover{ color:#fff; text-decoration:underline }
+.site-footer--purple .muted{ color:#f1eaff }
+.site-footer--purple .foot-bottom{
+  border-top:1px solid rgba(255,255,255,.22);
+  margin-top:18px; padding-top:12px; color:#f1eaff; text-align:center;
+}
+
+/* Mobile stacking */
+@media (max-width: 860px){
+  .footer-grid{ grid-template-columns:1fr; }
+  .brand--foot{ margin-bottom:.5rem }
+  .foot-bottom{ text-align:left; }
+}
