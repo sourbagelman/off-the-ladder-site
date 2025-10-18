@@ -22,28 +22,34 @@
     </nav>
   </header>
 
-  <main class="container">
-    <section class="card">
-      <h1>Contact Us</h1>
-      <p class="muted">Have a project in mind? Reach out below.</p>
-      <form action="https://formspree.io/f/xdknjvze" method="POST">
-        <div class="row">
-          <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required />
+ <main>
+  <section class="full-section alt">
+    <div class="container">
+      <div class="card reveal">
+        <h1>Contact</h1>
+        <p class="muted">Tell us about your project and we’ll get back to you quickly.</p>
+
+        <form action="https://formspree.io/f/xdknjvze" method="POST" class="contact-form">
+          <div class="row">
+            <div>
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="_replyto" required />
+            </div>
           </div>
-          <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="_replyto" required />
-          </div>
-        </div>
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-        <br />
-        <button class="btn" type="submit">Send Message</button>
-      </form>
-    </section>
-  </main>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <br />
+          <button class="btn btn-lg" type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
 
   <footer class="site-footer site-footer--purple">
   <div class="footer-wrap">
