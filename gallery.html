@@ -6,147 +6,167 @@
   <title>Project Gallery – Off The Ladder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-  <script>
-  // Simple IntersectionObserver to add .in to .reveal elements
-  (function(){
-    var els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window) || !els.length) return els.forEach(function(e){ e.classList.add('in'); });
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); } });
-    }, { threshold: 0.12 });
-    els.forEach(function(e){ io.observe(e); });
-  })();
-</script>
-
 <body class="otl">
 
+  <!-- Header -->
   <header class="site-header">
-    <nav class="nav">
+    <nav class="nav" role="navigation" aria-label="Main">
       <a class="brand" href="index.html">
         <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo" />
         Off The Ladder
       </a>
       <div class="nav-links">
         <a href="index.html">Home</a>
-        <a href="gallery.html">Gallery</a>
+        <a href="gallery.html" aria-current="page" class="active">Gallery</a>
         <a href="contact.html">Contact</a>
       </div>
     </nav>
   </header>
 
- <main>
-  <section class="full-section">
-    <div class="container">
-      <div class="card reveal">
-        <h1>Gallery</h1>
-        <p class="muted">Recent projects and in-progress work.</p>
-        <div id="gallery" class="grid auto"></div>
+  <!-- Main -->
+  <main>
+    <section class="full-section">
+      <div class="container">
+        <div class="card reveal">
+          <h1>Gallery</h1>
+          <p class="muted">Recent projects and in-progress work.</p>
+          <div id="gallery" class="grid auto" aria-live="polite"></div>
+        </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 
-
-  <script>
-    const cloud = "dttivrbf0";
-    const tag = "otl-gallery";
-    const wrap = document.getElementById("gallery");
-
-    function buildThumbUrl(r) {
-      const provided = r.secure_url || r.url;
-      if (provided) {
-        const parts = provided.split("/upload/");
-        if (parts.length === 2)
-          return parts[0] + "/upload/c_fill,w_800,h_600,f_auto,q_auto/" + parts[1];
-        return provided;
-      }
-      const v = r.version ? `v${r.version}/` : "";
-      const fmt = r.format ? `.${r.format}` : "";
-      return `https://res.cloudinary.com/${cloud}/image/upload/c_fill,w_800,h_600,f_auto,q_auto/${v}${r.public_id}${fmt}`;
-    }
-
-    function isProbablyLogo(r) {
-      const id = (r.public_id || "").toLowerCase();
-      return id.includes("logo") || id.includes("otl-logo");
-    }
-
-    const listUrl = `https://res.cloudinary.com/${cloud}/image/list/${tag}.json?v=${Date.now()}`;
-
-    fetch(listUrl, { cache: "no-store" })
-      .then(r => { if (!r.ok) throw new Error(`List request failed: ${r.status}`); return r.json(); })
-      .then(({ resources = [] }) => {
-        const show = resources.filter(r => !isProbablyLogo(r));
-        if (!show.length) {
-          wrap.innerHTML = "<p class='muted'>No images found yet. Check the ‘otl-gallery’ tag in Cloudinary.</p>";
-          return;
-        }
-        show.forEach(r => {
-          const src = buildThumbUrl(r);
-          const a = document.createElement('a');
-          a.href = src;
-          a.target = "_blank";
-          a.className = "tile";
-
-          const img = document.createElement('img');
-          img.src = src;
-          img.alt = r.public_id || "project photo";
-          img.loading = "lazy";
-
-          a.appendChild(img);
-          wrap.appendChild(a);
-        });
-      })
-      .catch(err => {
-        console.error("Cloudinary list error:", err);
-        wrap.innerHTML = "<p class='muted'>Couldn’t load gallery. Ensure assets are public (delivery=upload) and tagged ‘otl-gallery’.</p>";
-      });
-  </script>
-
+  <!-- Footer -->
   <footer class="site-footer site-footer--purple">
-  <div class="footer-wrap">
-    <div class="footer-grid">
-      <!-- LEFT: Contact -->
-      <div class="foot-col foot-left">
-        <a class="brand brand--foot" href="index.html">
-          <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo">
-          Off The Ladder
-        </a>
-        <p class="foot-contact">
-          <strong>David Cullen</strong><br>
-          <a href="tel:+18176027980">817-602-7980</a><br>
-          <a href="mailto:dave@otldfw.com">dave@otldfw.com</a><br>
-          <span>Mon–Fri · 9:00 AM – 4:00 PM</span>
-        </p>
-      </div>
+    <div class="footer-wrap">
+      <div class="footer-grid">
+        <!-- LEFT: Contact -->
+        <div class="foot-col foot-left">
+          <a class="brand brand--foot" href="index.html">
+            <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo">
+            Off The Ladder
+          </a>
+          <p class="foot-contact">
+            <strong>David Cullen</strong><br>
+            <a href="tel:+18176027980">817-602-7980</a><br>
+            <a href="mailto:dave@otldfw.com">dave@otldfw.com</a><br>
+            <span>Mon–Fri · 9:00 AM – 4:00 PM</span>
+          </p>
+        </div>
 
-      <!-- CENTER: Links -->
-      <div class="foot-col foot-center">
-        <ul class="foot-links foot-links--inline">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
+        <!-- CENTER: Links -->
+        <div class="foot-col foot-center">
+          <ul class="foot-links foot-links--inline" role="list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html" aria-current="page">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
 
-      <!-- RIGHT: Service Area -->
-      <div class="foot-col foot-right">
-        <h4>Service Area</h4>
-        <p class="muted">Fort Worth + surrounding communities</p>
+        <!-- RIGHT: Service Area -->
+        <div class="foot-col foot-right">
+          <h4>Service Area</h4>
+          <p class="muted">Fort Worth + surrounding communities</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="foot-bottom">
-    <p>© <span id="otlYear"></span> Off The Ladder Construction. All rights reserved.</p>
-  </div>
-</footer>
+    <div class="foot-bottom">
+      <p>© <span id="otlYear"></span> Off The Ladder Construction. All rights reserved.</p>
+    </div>
+  </footer>
 
-<script>
-  (function(){ var y=document.getElementById('otlYear'); if(y) y.textContent=new Date().getFullYear(); })();
-</script>
+  <!-- Scripts at end for best performance -->
+  <script>
+    // Reveal-on-scroll
+    (function(){
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || !els.length) {
+        els.forEach(function(e){ e.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function(e){ io.observe(e); });
+    })();
 
+    // Footer year
+    (function(){
+      var y = document.getElementById('otlYear');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
 
+    // Cloudinary gallery
+    document.addEventListener('DOMContentLoaded', function(){
+      var cloud = "dttivrbf0";
+      var tag = "otl-gallery";
+      var wrap = document.getElementById("gallery");
+      if (!wrap) return;
 
+      function buildThumbUrl(r){
+        var provided = r.secure_url || r.url;
+        if (provided) {
+          var parts = provided.split("/upload/");
+          if (parts.length === 2) {
+            return parts[0] + "/upload/c_fill,w_800,h_600,f_auto,q_auto/" + parts[1];
+          }
+          return provided;
+        }
+        var v = r.version ? ("v" + r.version + "/") : "";
+        var fmt = r.format ? ("." + r.format) : "";
+        return "https://res.cloudinary.com/" + cloud + "/image/upload/c_fill,w_800,h_600,f_auto,q_auto/" + v + r.public_id + fmt;
+      }
+
+      function isProbablyLogo(r){
+        var id = (r.public_id || "").toLowerCase();
+        return id.includes("logo") || id.includes("otl-logo");
+      }
+
+      var listUrl = "https://res.cloudinary.com/" + cloud + "/image/list/" + tag + ".json?v=" + Date.now();
+
+      fetch(listUrl, { cache: "no-store" })
+        .then(function(r){
+          if (!r.ok) throw new Error("List request failed: " + r.status);
+          return r.json();
+        })
+        .then(function(data){
+          var resources = (data && data.resources) ? data.resources : [];
+          var show = resources.filter(function(r){ return !isProbablyLogo(r); });
+
+          if (!show.length) {
+            wrap.innerHTML = "<p class='muted'>No images found yet. Check the ‘otl-gallery’ tag in Cloudinary.</p>";
+            return;
+          }
+
+          show.forEach(function(r){
+            var src = buildThumbUrl(r);
+            var a = document.createElement('a');
+            a.href = src;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.className = "tile";
+
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = r.public_id || "project photo";
+            img.loading = "lazy";
+
+            a.appendChild(img);
+            wrap.appendChild(a);
+          });
+        })
+        .catch(function(err){
+          console.error("Cloudinary list error:", err);
+          wrap.innerHTML = "<p class='muted'>Couldn’t load gallery. Ensure assets are public (delivery=upload) and tagged ‘otl-gallery’.</p>";
+        });
+    });
+  </script>
 </body>
 </html>
 
