@@ -590,17 +590,37 @@ h1::after, h2::after{
 .btn.light{ border-color:#dcd2ff }
 
 /* HERO: real photo + layered gradients for readable text */
-.hero{
-  position:relative;
-  color:#fff;
+.hero {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  padding: 140px 20px 120px;
   background:
-    linear-gradient(180deg, rgba(36,17,77,.55), rgba(36,17,77,.35)),             /* top shading */
-    url('images/hero-bg.jpg') center/cover no-repeat,                            /* your image */
-    radial-gradient(1200px 600px at 10% -20%, rgba(255,255,255,.08), transparent 60%); /* subtle texture if no image yet */
+    linear-gradient(180deg, rgba(36,17,77,.35), rgba(36,17,77,.25)), /* lighter purple wash */
+    url('images/hero-bg.jpg') center/cover no-repeat;
 }
-.hero__sub{ color:#f1eaff }
 
-/* Optional: make the hero a bit tighter on very small screens */
-@media (max-width:520px){
-  .hero .btn-lg{ width:100%; justify-content:center }
+/* ensure hero text appears above background */
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5.2vw, 56px);
+  margin-bottom: 14px;
+}
+
+.hero__sub {
+  max-width: 760px;
+  margin: 0 auto 22px;
+  color: #f6f2ff;
+  font-size: clamp(16px, 1.5vw, 18px);
+}
+
+.hero__cta {
+  display: inline-flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
