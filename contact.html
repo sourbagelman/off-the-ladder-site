@@ -31,7 +31,7 @@
           <h1>Contact</h1>
           <p class="muted">Tell us about your project and we’ll get back to you quickly.</p>
 
-          <form action="https://formspree.io/f/xlgwlrop" method="POST" class="contact-form">
+          <form id="otlContactForm" action="https://formspree.io/f/xlgwlrop" method="POST" class="contact-form">
 
             <!-- Honeypot (spam trap) -->
             <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
@@ -39,8 +39,8 @@
             <!-- Custom subject -->
             <input type="hidden" name="_subject" value="New inquiry from OTLDFW.com" />
 
-            <!-- Redirect after submit (RELATIVE path to avoid mismatch issues) -->
-            <input type="hidden" name="_next" value="/thank-you.html" />
+            <!-- Keep this for fallback (JS will handle redirect) -->
+            <input type="hidden" name="_next" value="https://www.otldfw.com/thank-you.html" />
 
             <div class="row">
               <div>
@@ -58,6 +58,16 @@
 
             <br />
             <button class="btn btn-lg" type="submit">Send Message</button>
+
+            <!-- Status message -->
+            <p id="formStatus" class="muted" style="margin-top:12px; display:none;"></p>
+
+            <!-- No-JS fallback note -->
+            <noscript>
+              <p class="muted" style="margin-top:12px;">
+                JavaScript is required to submit this form. Please email <a href="mailto:dave@otldfw.com">dave@otldfw.com</a>.
+              </p>
+            </noscript>
           </form>
 
         </div>
@@ -131,6 +141,44 @@
     (function(){
       var y = document.getElementById('otlYear');
       if (y) y.textContent = new Date().getFullYear();
+    })();
+
+    // Formspree submit (JS-controlled redirect)
+    (function(){
+      var form = document.getElementById('otlContactForm');
+      var statusEl = document.getElementById('formStatus');
+      if (!form) return;
+
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+
+        if (statusEl) {
+          statusEl.style.display = 'block';
+          statusEl.textContent = 'Sending...';
+        }
+
+        try {
+          var res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            window.location.href = '/thank-you.html';
+            return;
+          }
+
+          // If Formspree returns errors, show something useful
+          var data = {};
+          try { data = await res.json(); } catch (_) {}
+          var msg = (data && data.error) ? data.error : 'Something went wrong. Please try again.';
+          if (statusEl) statusEl.textContent = msg;
+
+        } catch (err) {
+          if (statusEl) statusEl.textContent = 'Network error. Please try again or email dave@otldfw.com.';
+        }
+      });
     })();
   </script>
 
