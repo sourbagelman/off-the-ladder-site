@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You – Off The Ladder Construction</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="otl">
+
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo" />
+        Off The Ladder
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="full-section alt">
+      <div class="container">
+        <div class="card">
+          <h1>Thank You</h1>
+          <p class="muted">
+            Your message has been sent successfully.
+          </p>
+          <p>
+            Dave will review your inquiry and get back to you as soon as possible.
+          </p>
+
+          <br />
+
+          <a class="btn btn-lg" href="index.html">Return to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer site-footer--purple">
+    <div class="foot-bottom">
+      <p>© <span id="otlYear"></span> Off The Ladder Construction. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      var y = document.getElementById('otlYear');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
+  </script>
+
+</body>
+</html>
