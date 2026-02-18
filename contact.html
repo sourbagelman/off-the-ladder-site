@@ -32,15 +32,15 @@
           <p class="muted">Tell us about your project and we’ll get back to you quickly.</p>
 
           <form action="https://formspree.io/f/xlgwlrop" method="POST" class="contact-form">
-            
+
             <!-- Honeypot (spam trap) -->
             <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
             <!-- Custom subject -->
             <input type="hidden" name="_subject" value="New inquiry from OTLDFW.com" />
 
-            <!-- Redirect after submit -->
-            <input type="hidden" name="_next" value="https://www.otldfw.com/thank-you.html" />
+            <!-- Redirect after submit (RELATIVE path to avoid mismatch issues) -->
+            <input type="hidden" name="_next" value="/thank-you.html" />
 
             <div class="row">
               <div>
