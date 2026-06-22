@@ -613,3 +613,32 @@ select:focus{
   color:var(--purple);
   font-weight:800;
 }
+
+.thank-you-card{
+  max-width:760px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.thank-you-card h1::after{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.thank-you-card .eyebrow{
+  justify-content:center;
+}
+
+.thank-you-card .eyebrow::before{
+  margin-right:0;
+}
+
+.thank-you-info{
+  max-width:420px;
+  margin:24px auto;
+}
+
+.thank-you-info a{
+  color:var(--purple);
+  text-decoration:none;
+}
