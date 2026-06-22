@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Contact Off The Ladder | Fort Worth Remodeling Quotes</title>
-  <meta name="description" content="Contact Off The Ladder Construction for remodeling, repair, outdoor, and custom construction quotes in Fort Worth and surrounding communities." />
+  <title>Contact Off The Ladder | Commercial & Residential Quotes</title>
+  <meta name="description" content="Contact Off The Ladder Construction for commercial renovations, tenant improvements, facility upgrades, residential remodeling, repairs, and custom construction quotes in Fort Worth." />
   <link rel="canonical" href="https://www.otldfw.com/contact.html" />
 
   <meta property="og:title" content="Contact Off The Ladder Construction" />
-  <meta property="og:description" content="Request a quote for remodeling, repairs, outdoor projects, and custom construction work in Fort Worth and surrounding communities." />
+  <meta property="og:description" content="Request a quote for commercial renovations, tenant improvements, residential remodeling, repairs, outdoor projects, and custom construction work." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.otldfw.com/contact.html" />
   <meta property="og:image" content="https://www.otldfw.com/images/otl-logo.jpg" />
@@ -36,6 +36,16 @@
         "White Settlement TX",
         "Tarrant County TX",
         "Parker County TX"
+      ],
+      "serviceType": [
+        "Commercial renovation",
+        "Tenant improvement",
+        "Commercial build-out",
+        "Facility upgrade",
+        "Residential remodeling",
+        "Home repair",
+        "Outdoor construction",
+        "Custom construction"
       ]
     }
   }
@@ -67,11 +77,21 @@
 
           <div class="reveal">
             <p class="eyebrow">Request a Quote</p>
-            <h1>Tell Dave about your project.</h1>
+            <h1>Tell Dave about your commercial or residential project.</h1>
             <p class="muted">
-              Looking at a remodel, repair, outdoor project, or custom build idea?
-              Send the details here and Off The Ladder Construction will follow up.
+              Planning a business renovation, tenant improvement, facility upgrade,
+              home remodel, repair, outdoor project, or custom build? Send the details here
+              and Off The Ladder Construction will follow up.
             </p>
+
+            <div class="trust-card contact-info-card">
+              <h3>Commercial Work</h3>
+              <p class="muted">
+                Off The Ladder works with business owners, property managers, and commercial
+                clients on renovations, build-outs, repairs, upgrades, and practical improvements
+                that help a space work better.
+              </p>
+            </div>
 
             <div class="trust-card contact-info-card">
               <h3>Prefer to call?</h3>
@@ -131,20 +151,33 @@
                 </div>
               </div>
 
+              <label for="clientType">Project Category</label>
+              <select id="clientType" name="project_category">
+                <option value="">Select one</option>
+                <option value="Commercial Project">Commercial Project</option>
+                <option value="Residential Project">Residential Project</option>
+                <option value="Not Sure Yet">Not Sure Yet</option>
+              </select>
+
               <label for="projectType">Project Type</label>
               <select id="projectType" name="project_type">
                 <option value="">Select one</option>
+                <option value="Commercial Renovation">Commercial Renovation</option>
+                <option value="Tenant Improvement">Tenant Improvement</option>
+                <option value="Commercial Build-Out">Commercial Build-Out</option>
+                <option value="Facility Upgrade">Facility Upgrade</option>
+                <option value="Commercial Repair / Maintenance">Commercial Repair / Maintenance</option>
                 <option value="Home Remodel">Home Remodel</option>
                 <option value="Kitchen Project">Kitchen Project</option>
                 <option value="Bathroom Project">Bathroom Project</option>
                 <option value="Outdoor Project">Outdoor Project</option>
-                <option value="Repair / Improvement">Repair / Improvement</option>
+                <option value="Residential Repair / Improvement">Residential Repair / Improvement</option>
                 <option value="Custom Project">Custom Project</option>
                 <option value="Other">Other</option>
               </select>
 
               <label for="message">Project Details</label>
-              <textarea id="message" name="message" rows="6" placeholder="Tell Dave what you want built, repaired, remodeled, or improved." required></textarea>
+              <textarea id="message" name="message" rows="6" placeholder="Tell Dave what you need built, repaired, remodeled, improved, or finished out." required></textarea>
 
               <button class="btn btn-lg" type="submit">Send Message</button>
 
@@ -207,7 +240,6 @@
   </footer>
 
   <script>
-    // Reveal-on-scroll
     (function(){
       var els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window) || !els.length) {
@@ -227,13 +259,11 @@
       els.forEach(function(e){ io.observe(e); });
     })();
 
-    // Footer year
     (function(){
       var y = document.getElementById('otlYear');
       if (y) y.textContent = new Date().getFullYear();
     })();
 
-    // Formspree submit
     (function(){
       var form = document.getElementById('otlContactForm');
       var statusEl = document.getElementById('formStatus');
