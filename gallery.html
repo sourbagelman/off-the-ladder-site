@@ -3,18 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Project Gallery – Off The Ladder</title>
+
+  <title>Project Gallery | Fort Worth Remodels | Off The Ladder</title>
+  <meta name="description" content="View recent remodeling, repair, outdoor, and custom construction projects from Off The Ladder Construction in Fort Worth and surrounding communities." />
+  <link rel="canonical" href="https://www.otldfw.com/gallery.html" />
+
+  <meta property="og:title" content="Project Gallery | Off The Ladder Construction" />
+  <meta property="og:description" content="Recent remodels, outdoor projects, repairs, and custom construction work from Off The Ladder Construction." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.otldfw.com/gallery.html" />
+  <meta property="og:image" content="https://www.otldfw.com/images/otl-logo.jpg" />
+
   <link rel="stylesheet" href="style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Off The Ladder Construction Project Gallery",
+    "url": "https://www.otldfw.com/gallery.html",
+    "description": "Recent remodeling, repair, outdoor, and custom construction projects by Off The Ladder Construction in Fort Worth and surrounding communities.",
+    "publisher": {
+      "@type": "GeneralContractor",
+      "name": "Off The Ladder Construction",
+      "telephone": "+18176027980",
+      "email": "dave@otldfw.com",
+      "url": "https://www.otldfw.com/"
+    }
+  }
+  </script>
 </head>
+
 <body class="otl">
 
-  <!-- Header -->
   <header class="site-header">
     <nav class="nav" role="navigation" aria-label="Main">
       <a class="brand" href="index.html">
         <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo" />
         Off The Ladder
       </a>
+
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="gallery.html" aria-current="page" class="active">Gallery</a>
@@ -23,38 +51,62 @@
     </nav>
   </header>
 
-  <!-- Main -->
   <main>
-    <section class="full-section">
+
+    <section class="full-section alt">
       <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Recent Work</p>
+          <h1>Project Gallery</h1>
+          <p class="muted">
+            A look at remodels, repairs, outdoor projects, and custom work from
+            Off The Ladder Construction around Fort Worth and nearby communities.
+          </p>
+        </div>
+
         <div class="card reveal">
-          <h1>Gallery</h1>
-          <p class="muted">Recent projects and in-progress work.</p>
-          <div id="gallery" class="grid auto" aria-live="polite"></div>
+          <div id="gallery" class="grid auto" aria-live="polite">
+            <p class="muted">Loading recent project photos...</p>
+          </div>
         </div>
       </div>
     </section>
+
+    <section class="full-section cta-section">
+      <div class="container reveal">
+        <div class="cta-card">
+          <p class="eyebrow">Like What You See?</p>
+          <h2>Let’s talk through your project.</h2>
+          <p class="muted">
+            Send Dave a few details about what you want built, repaired, or remodeled.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn-lg" href="contact.html">Request a Quote</a>
+            <a class="btn btn-lg light" href="tel:+18176027980">Call 817-602-7980</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer site-footer--purple">
     <div class="footer-wrap">
       <div class="footer-grid">
-        <!-- LEFT: Contact -->
+
         <div class="foot-col foot-left">
           <a class="brand brand--foot" href="index.html">
-            <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo">
+            <img src="images/otl-logo.jpg" alt="Off The Ladder Construction logo" />
             Off The Ladder
           </a>
           <p class="foot-contact">
-            <strong>David Cullen</strong><br>
-            <a href="tel:+18176027980">817-602-7980</a><br>
-            <a href="mailto:dave@otldfw.com">dave@otldfw.com</a><br>
+            <strong>David Cullen</strong><br />
+            <a href="tel:+18176027980">817-602-7980</a><br />
+            <a href="mailto:dave@otldfw.com">dave@otldfw.com</a><br />
             <span>Mon–Fri · 9:00 AM – 4:00 PM</span>
           </p>
         </div>
 
-        <!-- CENTER: Links -->
         <div class="foot-col foot-center">
           <ul class="foot-links foot-links--inline" role="list">
             <li><a href="index.html">Home</a></li>
@@ -63,11 +115,11 @@
           </ul>
         </div>
 
-        <!-- RIGHT: Service Area -->
         <div class="foot-col foot-right">
           <h4>Service Area</h4>
           <p class="muted">Fort Worth + surrounding communities</p>
         </div>
+
       </div>
     </div>
 
@@ -76,7 +128,6 @@
     </div>
   </footer>
 
-  <!-- Scripts at end for best performance -->
   <script>
     // Reveal-on-scroll
     (function(){
@@ -85,6 +136,7 @@
         els.forEach(function(e){ e.classList.add('in'); });
         return;
       }
+
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
           if (entry.isIntersecting) {
@@ -93,6 +145,7 @@
           }
         });
       }, { threshold: 0.12 });
+
       els.forEach(function(e){ io.observe(e); });
     })();
 
@@ -111,6 +164,7 @@
 
       function buildThumbUrl(r){
         var provided = r.secure_url || r.url;
+
         if (provided) {
           var parts = provided.split("/upload/");
           if (parts.length === 2) {
@@ -118,14 +172,42 @@
           }
           return provided;
         }
+
         var v = r.version ? ("v" + r.version + "/") : "";
         var fmt = r.format ? ("." + r.format) : "";
+
         return "https://res.cloudinary.com/" + cloud + "/image/upload/c_fill,w_800,h_600,f_auto,q_auto/" + v + r.public_id + fmt;
+      }
+
+      function buildFullUrl(r){
+        var provided = r.secure_url || r.url;
+
+        if (provided) {
+          var parts = provided.split("/upload/");
+          if (parts.length === 2) {
+            return parts[0] + "/upload/f_auto,q_auto/" + parts[1];
+          }
+          return provided;
+        }
+
+        var v = r.version ? ("v" + r.version + "/") : "";
+        var fmt = r.format ? ("." + r.format) : "";
+
+        return "https://res.cloudinary.com/" + cloud + "/image/upload/f_auto,q_auto/" + v + r.public_id + fmt;
       }
 
       function isProbablyLogo(r){
         var id = (r.public_id || "").toLowerCase();
         return id.includes("logo") || id.includes("otl-logo");
+      }
+
+      function cleanAltText(r){
+        var id = (r.public_id || "").split("/").pop() || "";
+        id = id.replace(/[-_]+/g, " ").replace(/\.[a-z0-9]+$/i, "").trim();
+
+        if (!id) return "Off The Ladder Construction project photo";
+
+        return "Off The Ladder Construction project photo - " + id;
       }
 
       var listUrl = "https://res.cloudinary.com/" + cloud + "/image/list/" + tag + ".json?v=" + Date.now();
@@ -139,22 +221,27 @@
           var resources = (data && data.resources) ? data.resources : [];
           var show = resources.filter(function(r){ return !isProbablyLogo(r); });
 
+          wrap.innerHTML = "";
+
           if (!show.length) {
-            wrap.innerHTML = "<p class='muted'>No images found yet. Check the ‘otl-gallery’ tag in Cloudinary.</p>";
+            wrap.innerHTML = "<p class='muted'>Project photos are being updated. Please check back soon, or contact Dave to talk through your project.</p>";
             return;
           }
 
           show.forEach(function(r){
-            var src = buildThumbUrl(r);
+            var thumbSrc = buildThumbUrl(r);
+            var fullSrc = buildFullUrl(r);
+
             var a = document.createElement('a');
-            a.href = src;
+            a.href = fullSrc;
             a.target = "_blank";
             a.rel = "noopener";
             a.className = "tile";
+            a.setAttribute("aria-label", "Open project photo");
 
             var img = document.createElement('img');
-            img.src = src;
-            img.alt = r.public_id || "project photo";
+            img.src = thumbSrc;
+            img.alt = cleanAltText(r);
             img.loading = "lazy";
 
             a.appendChild(img);
@@ -163,14 +250,11 @@
         })
         .catch(function(err){
           console.error("Cloudinary list error:", err);
-          wrap.innerHTML = "<p class='muted'>Couldn’t load gallery. Ensure assets are public (delivery=upload) and tagged ‘otl-gallery’.</p>";
+          wrap.innerHTML = "<p class='muted'>Project photos could not be loaded right now. Please refresh the page or contact Dave directly.</p>";
         });
     });
   </script>
+
 </body>
 </html>
-
-
-
-
 
