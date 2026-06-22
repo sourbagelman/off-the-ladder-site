@@ -594,3 +594,22 @@ select:focus{
     flex-wrap:wrap;
   }
 }
+
+.contact-form{
+  display:grid;
+  gap:14px;
+}
+
+.form-note{
+  font-size:.92rem;
+  margin:0;
+}
+
+.contact-info-card{
+  margin-top:18px;
+}
+
+.contact-info-card a{
+  color:var(--purple);
+  font-weight:800;
+}
