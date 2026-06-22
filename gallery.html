@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Project Gallery | Fort Worth Remodels | Off The Ladder</title>
-  <meta name="description" content="View recent remodeling, repair, outdoor, and custom construction projects from Off The Ladder Construction in Fort Worth and surrounding communities." />
+  <title>Commercial & Residential Projects | Off The Ladder Construction</title>
+  <meta name="description" content="View commercial renovations, tenant improvements, residential remodeling, repairs, outdoor projects, and custom construction work from Off The Ladder Construction." />
   <link rel="canonical" href="https://www.otldfw.com/gallery.html" />
 
-  <meta property="og:title" content="Project Gallery | Off The Ladder Construction" />
-  <meta property="og:description" content="Recent remodels, outdoor projects, repairs, and custom construction work from Off The Ladder Construction." />
+  <meta property="og:title" content="Commercial & Residential Projects | Off The Ladder Construction" />
+  <meta property="og:description" content="Commercial renovations, tenant improvements, residential remodels, repairs, outdoor projects, and custom construction work from Off The Ladder Construction." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.otldfw.com/gallery.html" />
   <meta property="og:image" content="https://www.otldfw.com/images/otl-logo.jpg" />
@@ -22,7 +22,7 @@
     "@type": "ImageGallery",
     "name": "Off The Ladder Construction Project Gallery",
     "url": "https://www.otldfw.com/gallery.html",
-    "description": "Recent remodeling, repair, outdoor, and custom construction projects by Off The Ladder Construction in Fort Worth and surrounding communities.",
+    "description": "Commercial renovations, tenant improvements, residential remodeling, repairs, outdoor projects, and custom construction projects completed by Off The Ladder Construction.",
     "publisher": {
       "@type": "GeneralContractor",
       "name": "Off The Ladder Construction",
@@ -59,8 +59,9 @@
           <p class="eyebrow">Recent Work</p>
           <h1>Project Gallery</h1>
           <p class="muted">
-            A look at remodels, repairs, outdoor projects, and custom work from
-            Off The Ladder Construction around Fort Worth and nearby communities.
+            A look at commercial renovations, tenant improvements, residential remodels,
+            repairs, outdoor projects, and custom construction work completed throughout
+            Fort Worth and surrounding communities.
           </p>
         </div>
 
@@ -76,9 +77,11 @@
       <div class="container reveal">
         <div class="cta-card">
           <p class="eyebrow">Like What You See?</p>
-          <h2>Let’s talk through your project.</h2>
+          <h2>Let's talk about your commercial or residential project.</h2>
           <p class="muted">
-            Send Dave a few details about what you want built, repaired, or remodeled.
+            Whether you're planning a business improvement, tenant finish-out,
+            facility upgrade, home remodel, repair, or custom project,
+            Off The Ladder would love to hear about it.
           </p>
           <div class="hero__cta">
             <a class="btn btn-lg" href="contact.html">Request a Quote</a>
@@ -129,7 +132,6 @@
   </footer>
 
   <script>
-    // Reveal-on-scroll
     (function(){
       var els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window) || !els.length) {
@@ -149,13 +151,11 @@
       els.forEach(function(e){ io.observe(e); });
     })();
 
-    // Footer year
     (function(){
       var y = document.getElementById('otlYear');
       if (y) y.textContent = new Date().getFullYear();
     })();
 
-    // Cloudinary gallery
     document.addEventListener('DOMContentLoaded', function(){
       var cloud = "dttivrbf0";
       var tag = "otl-gallery";
@@ -205,7 +205,7 @@
         var id = (r.public_id || "").split("/").pop() || "";
         id = id.replace(/[-_]+/g, " ").replace(/\.[a-z0-9]+$/i, "").trim();
 
-        if (!id) return "Off The Ladder Construction project photo";
+        if (!id) return "Off The Ladder Construction commercial and residential project photo";
 
         return "Off The Ladder Construction project photo - " + id;
       }
@@ -224,7 +224,7 @@
           wrap.innerHTML = "";
 
           if (!show.length) {
-            wrap.innerHTML = "<p class='muted'>Project photos are being updated. Please check back soon, or contact Dave to talk through your project.</p>";
+            wrap.innerHTML = "<p class='muted'>Project photos are being updated. Please check back soon, or contact Dave to talk through your commercial or residential project.</p>";
             return;
           }
 
@@ -257,4 +257,3 @@
 
 </body>
 </html>
-
